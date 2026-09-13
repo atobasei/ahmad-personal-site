@@ -1,0 +1,443 @@
+/* ==========================================================================
+   Palette & tokens — swap the accent (or add a second one) here only.
+   ========================================================================== */
+:root {
+  --color-bg: #f6f1e6;
+  --color-surface: #ece3d1;
+  --color-accent: #2f4a3e;
+  --color-accent-strong: #203029;
+  --color-text: #26291f;
+  --color-text-muted: #736c58;
+
+  /* TODO: second accent (warm amber / clay) — not decided yet, leave unused for now */
+  /* --color-accent-2: ; */
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  --radius: 10px;
+  --content-max: 760px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 4rem 1.25rem 5rem;
+}
+
+a {
+  color: inherit;
+}
+
+/* ==========================================================================
+   1. Header
+   ========================================================================== */
+.site-header {
+  text-align: center;
+  margin-bottom: 4.5rem;
+}
+
+.site-header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.25rem, 5vw, 3rem);
+  letter-spacing: -0.01em;
+}
+
+.bio {
+  max-width: 46ch;
+  margin: 1rem auto 0;
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   2. Featured tree of the day — the one dimensional/layered element on the page
+   ========================================================================== */
+.tree-feature {
+  margin-bottom: 4.5rem;
+  /* extra side padding so the offset backdrop has room to peek out */
+  padding: 0 0.75rem;
+}
+
+.tree-stack {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.tree-backdrop {
+  position: absolute;
+  top: 1.25rem;
+  left: -1rem;
+  right: 1rem;
+  bottom: -1.25rem;
+  background: linear-gradient(155deg, var(--color-accent-strong), var(--color-surface) 70%);
+  border-radius: var(--radius);
+  opacity: 0.35;
+}
+
+.tree-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* soft, blurred depth — not a hard border — sells the "lifted" layer */
+  box-shadow:
+    0 18px 40px -12px rgba(32, 34, 24, 0.35),
+    0 4px 12px rgba(32, 34, 24, 0.2);
+}
+
+/* TODO: replace .tree-photo-placeholder with a real <img> covering .tree-photo */
+.tree-photo-placeholder {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.tree-caption {
+  position: relative;
+  margin: -3rem 1.25rem 0 auto;
+  width: calc(100% - 2.5rem);
+  max-width: 300px;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem 1.25rem;
+  box-shadow:
+    0 14px 30px -10px rgba(32, 34, 24, 0.3),
+    0 2px 8px rgba(32, 34, 24, 0.18);
+}
+
+.tree-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.35rem;
+}
+
+.tree-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.tree-fact {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   3. Socials — explicit labeled pills
+   ========================================================================== */
+.social-row {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-icon {
+  display: inline-flex;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.social-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px -6px rgba(32, 34, 24, 0.35);
+}
+
+/* ==========================================================================
+   4. Major links — flatter, simpler cards
+   ========================================================================== */
+.section-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+}
+
+.section-card:hover,
+.section-card:focus-visible {
+  border-color: var(--color-accent);
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.section-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-accent);
+}
+
+.section-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.section-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.section-desc {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   Responsive — mobile-first base already narrow; widen breathing room up top
+   ========================================================================== */
+@media (min-width: 640px) {
+  .page {
+    padding-top: 5rem;
+  }
+}
+
+/* ==========================================================================
+   Trail reviews page (trails.html)
+   ========================================================================== */
+
+/* Wider content column so the card grid has room to breathe */
+.page--wide {
+  max-width: 1000px;
+}
+
+/* --- Landscape backdrop + heading (trails.html only) ----------------------
+   Every selector below is namespaced under .trails-hero / .trails-intro, so
+   none of it can affect index.html. The artwork is inline SVG in trails.html.
+
+   The backdrop is pinned to the viewport and the art inside it is taller than
+   the viewport, so trails.js can slide it upward as you scroll (parallax) —
+   you move down the landscape more slowly than the page moves.              */
+.trails-hero {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.trails-hero__art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* The 30vh of overhang is the parallax travel; at any scroll position you
+     still see ~77% of the landscape. */
+  height: 130vh;
+  display: block;
+  will-change: transform;
+}
+
+/* Page content scrolls over the pinned backdrop */
+.trails-hero + .page {
+  position: relative;
+  z-index: 1;
+  /* drops the heading low in the first screen, onto the dark foreground ridge */
+  padding-top: 76vh;
+}
+
+.trails-intro {
+  margin-bottom: 3rem;
+  color: #f6f1e6;
+  text-shadow: 0 1px 3px rgba(18, 26, 20, 0.55);
+}
+
+.trails-intro__back {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  color: inherit;
+  opacity: 0.92;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.2s ease;
+}
+
+.trails-intro__back:hover,
+.trails-intro__back:focus-visible {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.trails-intro__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.trails-intro__lede {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Cards now float over the landscape rather than a flat page, so they carry a
+   little more shadow to stay separated from it. */
+.trails-hero ~ .page .trail-card {
+  box-shadow: 0 6px 18px -8px rgba(24, 30, 20, 0.45);
+}
+
+.trail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 560px) {
+  .trail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 860px) {
+  .trail-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Flatter/simpler than the home page tree module — light border, no heavy shadow */
+.trail-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 1px 3px rgba(32, 34, 24, 0.08);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trail-card:hover,
+.trail-card:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px -8px rgba(32, 34, 24, 0.25);
+}
+
+.trail-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.trail-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.trail-card-body {
+  padding: 1.1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.trail-card-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.trail-card-location {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.trail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+/* GSMNP gets its own look since it'll show up often — flag it at a glance */
+.tag--gsmnp {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.trail-card-date {
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
