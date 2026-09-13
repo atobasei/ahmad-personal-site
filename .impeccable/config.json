@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index-v11.html"
+        ],
+        "createdAt": "2026-09-13T23:22:15.661Z",
+        "reason": "Model triage: the flagged wrapper has explicit padding of clamp(1.25rem-2.25rem) i.e. 20-36px, far above the rule's 8-16px floor; detector is measuring the flex/column child box rather than the padding box. Comp file, not shipping code."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index-v12.html"
+        ],
+        "createdAt": "2026-09-13T23:22:15.677Z",
+        "reason": "Model triage: the flagged wrapper has explicit padding of clamp(1.25rem-2.25rem) i.e. 20-36px, far above the rule's 8-16px floor; detector is measuring the flex/column child box rather than the padding box. Comp file, not shipping code."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index-v13.html"
+        ],
+        "createdAt": "2026-09-13T23:22:15.690Z",
+        "reason": "Model triage: the flagged wrapper has explicit padding of clamp(1.25rem-2.25rem) i.e. 20-36px, far above the rule's 8-16px floor; detector is measuring the flex/column child box rather than the padding box. Comp file, not shipping code."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index-v14.html"
+        ],
+        "createdAt": "2026-09-13T23:22:15.703Z",
+        "reason": "Model triage: the flagged wrapper has explicit padding of clamp(1.25rem-2.25rem) i.e. 20-36px, far above the rule's 8-16px floor; detector is measuring the flex/column child box rather than the padding box. Comp file, not shipping code."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-13T23:51:33.395Z",
+        "reason": "Model triage: .well carries clamp(1.5rem,4vw,2.25rem) = 24-36px of padding, far above the rule's 8-16px floor; detector measures the flex child box, not the padding box."
+      }
+    ]
+  }
+}

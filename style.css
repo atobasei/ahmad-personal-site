@@ -1,443 +1,433 @@
 /* ==========================================================================
-   Palette & tokens — swap the accent (or add a second one) here only.
+   AHMAD TOBASEI — SITE STYLESHEET
+   One shared stylesheet for every page (index, trails, projects). Plain CSS,
+   no build step; the tokens in :root are the single source of truth.
+
+   Contents
+     1.  Design tokens (:root)
+     2.  Reset + base
+     3.  Atmosphere — the drifting washes behind every page
+     4.  Shared site header / nav
+     5.  Page shell + typography
+     6.  THE WELL — the recessed centrepiece (signature technique)
+     7.  Link rows (home page "Pages" list)
+     8.  Social pills
+     9.  Card grid — trail + project cards
+     10. Tags
+   ==========================================================================
+
+   ── THE DEPTH RULE ────────────────────────────────────────────────────────
+   Every page gets at most ONE dimensional element: its featured centrepiece.
+   That element is RECESSED, not raised — carved into the page rather than
+   floating above it. The inversion is the whole signature. Everything else
+   on the site stays flat or barely lifted so the recess keeps its meaning.
+
+   How the recess is built (see section 6, `.well`):
+
+     1. The fill is DARKER than the page ground (--color-sunk on --color-bg).
+        A hole is darker than the surface it was cut into. This alone does
+        about a third of the work.
+     2. An inset shadow on the TOP edge only, doubled — one tight (2px blur)
+        and one wide and lifted (28px blur, -14px spread). That is the near
+        lip of the cavity casting down into it.
+     3. A single 1px light line along the BOTTOM inside edge
+        (inset 0 -1px 0 rgba(255,255,255,.85)) — the far wall catching the
+        light. This line is load-bearing: delete it and the recess flattens
+        into a plain grey box instantly. Do not "clean it up".
+     4. A warm diagonal gradient laid over the cavity at 118deg, so it reads
+        as lit from one side rather than evenly filled.
+     5. Contents sit at z-index 1 above that gradient and carry their own
+        small real drop-shadow, so they read as objects sitting IN the well
+        rather than as artwork printed on its floor.
+
+   To reuse this on another page: wrap the centrepiece in `.well`. Then obey
+   two rules — never give `.well` a raised box-shadow, and never give any
+   other element on the same page an inset shadow. The effect only reads as
+   special while it is the only one on the page.
    ========================================================================== */
-:root {
-  --color-bg: #f6f1e6;
-  --color-surface: #ece3d1;
-  --color-accent: #2f4a3e;
-  --color-accent-strong: #203029;
-  --color-text: #26291f;
-  --color-text-muted: #736c58;
 
-  /* TODO: second accent (warm amber / clay) — not decided yet, leave unused for now */
-  /* --color-accent-2: ; */
-
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
-
-  --radius: 10px;
-  --content-max: 760px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-body);
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
-
-.page {
-  max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 4rem 1.25rem 5rem;
-}
-
-a {
-  color: inherit;
-}
 
 /* ==========================================================================
-   1. Header
+   1. DESIGN TOKENS — change the site here, not in the rules below
    ========================================================================== */
-.site-header {
-  text-align: center;
-  margin-bottom: 4.5rem;
+:root{
+
+  /* ---- Colour ------------------------------------------------------------
+     The three greys are a deliberate ladder and their ORDER is what makes
+     depth read: sunk is darker than bg, surface is lighter than bg.
+       --color-sunk     recessed  (the well floor)
+       --color-bg       ground    (the page itself)
+       --color-surface  raised    (cards)
+     Swapping any two of these breaks the depth rule above.                 */
+  --color-bg:#e9ecea;          /* cool mist — the page ground */
+  --color-sunk:#e0e6e2;        /* recessed: darker than the ground */
+  --color-surface:#f2f4f2;     /* raised: lighter than the ground */
+
+  --color-ink:#18241e;         /* primary text */
+  --color-ink-muted:#4d5d54;   /* secondary text, descriptions */
+  --color-label:#55665c;       /* small uppercase section labels */
+  --color-accent:#9a4a1e;      /* warm accent — dark enough to set type in */
+  --color-deep:#0f1d17;        /* near-black, for inverted chips */
+
+  --color-line:rgba(24,36,30,.12);         /* hairlines, card borders */
+  --color-line-strong:rgba(24,36,30,.26);  /* hover borders */
+
+  /* ---- Typography -------------------------------------------------------
+     Display serif for names and titles, humanist sans for everything else. */
+  --font-display:'Faustina',Georgia,'Times New Roman',serif;
+  --font-body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+
+  --text-label:.78rem;                       /* section labels */
+  --text-sm:.92rem;                          /* meta, descriptions */
+  --text-base:1rem;
+  --text-lede:clamp(1.02rem,1.5vw,1.12rem);  /* bio / page intro */
+  --text-row:1.2rem;                         /* link-row titles */
+  --text-card:1.18rem;                       /* card titles */
+  --text-h2:clamp(1.45rem,3.4vw,1.85rem);    /* centrepiece title */
+  --text-h1:clamp(2.4rem,6.4vw,3.6rem);      /* page heading */
+  --text-h1-home:clamp(2.6rem,7vw,4rem);     /* home page name, one step up */
+
+  --tracking-label:.13em;
+  --leading-body:1.7;
+  --leading-tight:1.15;
+
+  /* ---- Spacing (4px base) ---------------------------------------------- */
+  --space-1:.25rem;
+  --space-2:.5rem;
+  --space-3:.75rem;
+  --space-4:1rem;
+  --space-5:1.5rem;
+  --space-6:2rem;
+  --space-7:3rem;
+  --space-8:4rem;
+  --space-section:clamp(2.75rem,7vw,3.75rem);  /* between page sections */
+  --space-feature:clamp(3.5rem,9vw,5.5rem);    /* around the centrepiece */
+
+  /* ---- Radius ----------------------------------------------------------- */
+  --radius-sm:8px;
+  --radius-md:12px;
+  --radius-lg:18px;    /* the well */
+  --radius-pill:100px;
+
+  /* ---- Depth ------------------------------------------------------------
+     --shadow-sunk is the signature and belongs to `.well` only.
+     Cards use --shadow-card, which is deliberately much weaker.            */
+  --shadow-sunk:
+    inset 0 2px 5px rgba(15,29,23,.16),
+    inset 0 14px 28px -14px rgba(15,29,23,.34),
+    inset 0 -1px 0 rgba(255,255,255,.85);
+  --shadow-card:
+    0 1px 2px rgba(15,29,23,.05),
+    0 8px 18px -12px rgba(15,29,23,.28);
+  --shadow-card-hover:
+    0 2px 4px rgba(15,29,23,.06),
+    0 14px 26px -14px rgba(15,29,23,.36);
+  --shadow-object:0 6px 10px rgba(15,29,23,.18);  /* objects inside the well */
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --measure:720px;      /* reading column (home) */
+  --measure-wide:1040px;/* grid pages (trails, projects) */
+  --ease:.18s ease;
 }
 
-.site-header h1 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2.25rem, 5vw, 3rem);
-  letter-spacing: -0.01em;
-}
-
-.bio {
-  max-width: 46ch;
-  margin: 1rem auto 0;
-  color: var(--color-text-muted);
-  font-size: 1.05rem;
-}
 
 /* ==========================================================================
-   2. Featured tree of the day — the one dimensional/layered element on the page
+   2. RESET + BASE
    ========================================================================== */
-.tree-feature {
-  margin-bottom: 4.5rem;
-  /* extra side padding so the offset backdrop has room to peek out */
-  padding: 0 0.75rem;
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:var(--color-bg);
+  color:var(--color-ink);
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:var(--leading-body);
+  -webkit-font-smoothing:antialiased;
+  position:relative;
 }
 
-.tree-stack {
-  position: relative;
-  max-width: 480px;
-  margin: 0 auto;
-}
+img{max-width:100%;display:block}
 
-.tree-backdrop {
-  position: absolute;
-  top: 1.25rem;
-  left: -1rem;
-  right: 1rem;
-  bottom: -1.25rem;
-  background: linear-gradient(155deg, var(--color-accent-strong), var(--color-surface) 70%);
-  border-radius: var(--radius);
-  opacity: 0.35;
-}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
 
-.tree-photo {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius);
-  background: var(--color-surface);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  /* soft, blurred depth — not a hard border — sells the "lifted" layer */
-  box-shadow:
-    0 18px 40px -12px rgba(32, 34, 24, 0.35),
-    0 4px 12px rgba(32, 34, 24, 0.2);
-}
-
-/* TODO: replace .tree-photo-placeholder with a real <img> covering .tree-photo */
-.tree-photo-placeholder {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-}
-
-.tree-caption {
-  position: relative;
-  margin: -3rem 1.25rem 0 auto;
-  width: calc(100% - 2.5rem);
-  max-width: 300px;
-  background: var(--color-surface);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem 1.25rem;
-  box-shadow:
-    0 14px 30px -10px rgba(32, 34, 24, 0.3),
-    0 2px 8px rgba(32, 34, 24, 0.18);
-}
-
-.tree-eyebrow {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 0.35rem;
-}
-
-.tree-name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.35rem;
-  margin-bottom: 0.4rem;
-}
-
-.tree-fact {
-  color: var(--color-text-muted);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
 
 /* ==========================================================================
-   3. Socials — explicit labeled pills
+   3. ATMOSPHERE
+   Soft washes fixed behind every page. This is the site's ground texture —
+   it is what carries the outdoors mood without any literal illustration.
    ========================================================================== */
-.social-row {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 3rem;
+.air{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.air span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5}
+.air .w1{width:60vw;height:46vw;left:-14vw;top:-12vw;background:#b9cabd}
+.air .w2{width:48vw;height:40vw;right:-10vw;top:8vw;background:#cdd9cf}
+.air .w3{width:70vw;height:34vw;left:6vw;bottom:-14vw;background:#c3d2c6}
+.air .w4{width:34vw;height:26vw;right:4vw;bottom:6vw;background:#e6d3c2;opacity:.55}
+/* one low band of standing fog */
+.air .band{
+  position:absolute;left:-5%;right:-5%;top:52%;height:22vh;
+  background:linear-gradient(transparent,rgba(255,255,255,.75),transparent);
+  filter:blur(28px);opacity:.8;
 }
 
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1rem;
-  border: 1px solid var(--color-accent);
-  border-radius: 999px;
-  color: var(--color-accent);
-  font-size: 0.92rem;
-  font-weight: 500;
-  text-decoration: none;
-  background: transparent;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.social-icon {
-  display: inline-flex;
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.social-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-}
-
-.social-link:hover,
-.social-link:focus-visible {
-  background-color: var(--color-accent);
-  color: var(--color-bg);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px -6px rgba(32, 34, 24, 0.35);
-}
 
 /* ==========================================================================
-   4. Major links — flatter, simpler cards
+   4. SHARED SITE HEADER / NAV
+   The markup for this block is identical on every page — see the comment
+   above it in each HTML file. The current page is marked by the <body>
+   class (page-home / page-trails / page-projects) so the block itself never
+   has to differ between pages.
    ========================================================================== */
-.section-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+.site-header{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--space-4) var(--space-5);flex-wrap:wrap;
+  padding-bottom:var(--space-4);
+  border-bottom:1px solid var(--color-line);
+  margin-bottom:var(--space-section);
+}
+.site-name{
+  font-family:var(--font-display);
+  font-size:1.05rem;font-weight:600;letter-spacing:-.005em;
+  color:var(--color-ink);text-decoration:none;
+}
+.site-name:hover,.site-name:focus-visible{color:var(--color-accent)}
+
+.site-nav{display:flex;flex-wrap:wrap;gap:var(--space-5)}
+.site-nav a{
+  font-size:var(--text-sm);font-weight:500;
+  color:var(--color-ink-muted);text-decoration:none;
+  padding-bottom:2px;border-bottom:1px solid transparent;
+  transition:color var(--ease),border-color var(--ease);
+}
+.site-nav a:hover,.site-nav a:focus-visible{
+  color:var(--color-accent);border-bottom-color:var(--color-accent);
+}
+/* current page — driven by the body class, not by editing the header block */
+body.page-home     .site-nav a[href="index.html"],
+body.page-trails   .site-nav a[href="trails.html"],
+body.page-projects .site-nav a[href="projects.html"]{
+  color:var(--color-ink);border-bottom-color:var(--color-line-strong);
 }
 
-.section-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.25rem;
-  background: var(--color-surface);
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition: border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
-}
-
-.section-card:hover,
-.section-card:focus-visible {
-  border-color: var(--color-accent);
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-}
-
-.section-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-accent);
-}
-
-.section-icon svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-}
-
-.section-label {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.section-desc {
-  color: var(--color-text-muted);
-  font-size: 0.88rem;
-}
 
 /* ==========================================================================
-   Responsive — mobile-first base already narrow; widen breathing room up top
+   5. PAGE SHELL + TYPOGRAPHY
    ========================================================================== */
-@media (min-width: 640px) {
-  .page {
-    padding-top: 5rem;
-  }
+.page{
+  position:relative;z-index:1;
+  max-width:var(--measure);margin:0 auto;
+  padding:clamp(2.5rem,7vh,4.5rem) var(--space-5) var(--space-8);
 }
+.page--wide{max-width:var(--measure-wide)}
+
+.page-head{margin-bottom:var(--space-feature)}
+.page-head h1{
+  font-family:var(--font-display);font-weight:500;
+  font-size:var(--text-h1);line-height:1.05;letter-spacing:-.018em;
+}
+body.page-home .page-head h1{font-size:var(--text-h1-home)}
+
+/* bio on the home page, one-line intro on subpages */
+.lede{
+  margin-top:var(--space-4);max-width:46ch;
+  color:var(--color-ink-muted);font-size:var(--text-lede);
+}
+
+/* small uppercase section labels — plain words, quietly set */
+.section-label{
+  font-family:var(--font-body);
+  font-size:var(--text-label);font-weight:600;
+  letter-spacing:var(--tracking-label);text-transform:uppercase;
+  color:var(--color-label);margin:0 0 var(--space-4);
+}
+
+.block{margin-bottom:var(--space-section)}
+
 
 /* ==========================================================================
-   Trail reviews page (trails.html)
+   6. THE WELL — recessed centrepiece
+   Read THE DEPTH RULE at the top of this file before changing anything here.
    ========================================================================== */
+.feature{margin:var(--space-feature) 0}
 
-/* Wider content column so the card grid has room to breathe */
-.page--wide {
-  max-width: 1000px;
+.well{
+  position:relative;
+  background:var(--color-sunk);          /* 1. darker than the ground */
+  border-radius:var(--radius-lg);
+  padding:clamp(1.5rem,4vw,2.25rem);
+  box-shadow:var(--shadow-sunk);         /* 2 + 3. lip shadow + lit far wall */
+  display:flex;align-items:center;flex-wrap:wrap;
+  gap:clamp(1.25rem,3vw,2rem);
+}
+/* 4. the cavity reads as lit from one side */
+.well::after{
+  content:"";position:absolute;inset:0;border-radius:var(--radius-lg);
+  pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,242,226,.55) 0%,transparent 46%);
+}
+/* 5. contents sit above the gradient and cast their own shadow */
+.well-object{
+  width:132px;height:132px;flex:0 0 auto;
+  position:relative;z-index:1;
+  filter:drop-shadow(var(--shadow-object));
+}
+.well-copy{flex:1 1 250px;min-width:0;position:relative;z-index:1}
+
+.feature-label{
+  font-size:.74rem;font-weight:600;
+  letter-spacing:var(--tracking-label);text-transform:uppercase;
+  color:var(--color-accent);margin-bottom:var(--space-2);
+}
+.feature-name{
+  font-family:var(--font-display);font-weight:500;
+  font-size:var(--text-h2);line-height:var(--leading-tight);
+  margin:0 0 var(--space-2);
+}
+.feature-note{color:var(--color-ink-muted);font-size:var(--text-base);max-width:40ch}
+
+
+/* ==========================================================================
+   7. LINK ROWS — the home page "Pages" list
+   ========================================================================== */
+.rows{list-style:none}
+.rows a{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--space-5);
+  padding:1.05rem var(--space-1);
+  text-decoration:none;color:var(--color-ink);
+  border-bottom:1px solid var(--color-line);
+  transition:border-color var(--ease);
+}
+.rows li:first-child a{border-top:1px solid var(--color-line)}
+/* the hover nudge rides on transform, not padding — padding would relayout
+   the row on every frame */
+.rows .t{
+  font-family:var(--font-display);font-size:var(--text-row);font-weight:500;
+  transition:transform var(--ease),color var(--ease);
+}
+.rows .d{color:var(--color-ink-muted);font-size:var(--text-sm);text-align:right}
+.rows a:hover,.rows a:focus-visible{border-bottom-color:var(--color-accent)}
+.rows a:hover .t,.rows a:focus-visible .t{
+  color:var(--color-accent);transform:translateX(.5rem);
 }
 
-/* --- Landscape backdrop + heading (trails.html only) ----------------------
-   Every selector below is namespaced under .trails-hero / .trails-intro, so
-   none of it can affect index.html. The artwork is inline SVG in trails.html.
 
-   The backdrop is pinned to the viewport and the art inside it is taller than
-   the viewport, so trails.js can slide it upward as you scroll (parallax) —
-   you move down the landscape more slowly than the page moves.              */
-.trails-hero {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
+/* ==========================================================================
+   8. SOCIAL PILLS
+   ========================================================================== */
+.socials{list-style:none;display:flex;flex-wrap:wrap;gap:.55rem}
+.socials a{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:.55rem var(--space-4);border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(24,36,30,.14);
+  color:var(--color-ink);text-decoration:none;
+  font-size:.95rem;font-weight:500;
+  transition:background var(--ease),border-color var(--ease),color var(--ease);
+}
+.socials svg{width:1rem;height:1rem;fill:currentColor;opacity:.75}
+.socials a:hover,.socials a:focus-visible{
+  background:var(--color-deep);border-color:var(--color-deep);color:var(--color-bg);
+}
+.socials a:hover svg,.socials a:focus-visible svg{opacity:1}
+
+
+/* ==========================================================================
+   9. CARD GRID — trail cards and project cards share one treatment
+   Deliberately much flatter than `.well`: a hairline, a weak shadow, and a
+   2px hover lift. Nothing here should compete with the centrepiece.
+   NOTE: .trail-card / .trail-card-* class names are produced by trails.js and
+   .project-card / .project-card-* by projects.js — do not rename them here
+   without updating those files.
+   ========================================================================== */
+.card-grid{display:grid;grid-template-columns:1fr;gap:var(--space-5)}
+@media (min-width:560px){ .card-grid{grid-template-columns:repeat(2,1fr)} }
+@media (min-width:900px){ .card-grid{grid-template-columns:repeat(3,1fr)} }
+
+.trail-card,
+.project-card{
+  display:flex;flex-direction:column;
+  background:var(--color-surface);
+  border:1px solid var(--color-line);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  text-decoration:none;color:inherit;
+  box-shadow:var(--shadow-card);
+  transition:transform var(--ease),box-shadow var(--ease),border-color var(--ease);
+}
+.trail-card:hover,.trail-card:focus-visible,
+.project-card:hover,.project-card:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-card-hover);
+  border-color:var(--color-line-strong);
 }
 
-.trails-hero__art {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* The 30vh of overhang is the parallax travel; at any scroll position you
-     still see ~77% of the landscape. */
-  height: 130vh;
-  display: block;
-  will-change: transform;
+.trail-card-image,
+.project-card-image{
+  width:100%;aspect-ratio:4 / 3;overflow:hidden;
+  background:var(--color-sunk);
+}
+.trail-card-image img,
+.project-card-image img{width:100%;height:100%;object-fit:cover}
+
+/* fallback tile for a project with no preview image yet */
+.project-card-placeholder{
+  width:100%;height:100%;display:grid;place-content:center;
+  background:linear-gradient(140deg,#dfe6e1,#eaeeea);
+  font-family:var(--font-display);font-size:2.4rem;font-weight:500;
+  color:var(--color-label);
 }
 
-/* Page content scrolls over the pinned backdrop */
-.trails-hero + .page {
-  position: relative;
-  z-index: 1;
-  /* drops the heading low in the first screen, onto the dark foreground ridge */
-  padding-top: 76vh;
+.trail-card-body,
+.project-card-body{
+  padding:1.1rem 1.25rem 1.25rem;
+  display:flex;flex-direction:column;gap:var(--space-1);
+}
+.trail-card-name,
+.project-card-name{
+  font-family:var(--font-display);font-weight:500;
+  font-size:var(--text-card);line-height:1.25;
+  letter-spacing:normal;text-transform:none;color:var(--color-ink);
+  margin:0;
+}
+.trail-card-location,
+.project-card-desc{color:var(--color-ink-muted);font-size:var(--text-sm)}
+.project-card-desc{margin-top:var(--space-1)}
+
+.trail-card-date,
+.project-card-link{
+  margin-top:var(--space-2);
+  color:var(--color-ink-muted);font-size:.78rem;
+}
+.project-card-link{color:var(--color-accent);font-weight:600}
+
+
+/* ==========================================================================
+   10. TAGS
+   "gsmnp" gets its own fill because it recurs often enough to be worth
+   spotting at a glance — see renderTags() in trails.js.
+   ========================================================================== */
+.trail-tags,
+.project-tags{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-2)}
+.tag{
+  display:inline-flex;align-items:center;
+  background:var(--color-bg);color:var(--color-ink-muted);
+  border-radius:var(--radius-pill);
+  padding:.2rem .6rem;
+  font-size:.72rem;font-weight:500;
+}
+.tag--gsmnp{background:var(--color-accent);color:var(--color-bg)}
+
+
+/* ==========================================================================
+   11. RESPONSIVE
+   ========================================================================== */
+@media (max-width:520px){
+  .site-header{gap:var(--space-3)}
+  .site-nav{gap:var(--space-4)}
+  .well-object{width:104px;height:104px}
+  .rows a{gap:var(--space-3)}
 }
 
-.trails-intro {
-  margin-bottom: 3rem;
-  color: #f6f1e6;
-  text-shadow: 0 1px 3px rgba(18, 26, 20, 0.55);
-}
-
-.trails-intro__back {
-  display: inline-block;
-  margin-bottom: 0.4rem;
-  color: inherit;
-  opacity: 0.92;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: opacity 0.2s ease;
-}
-
-.trails-intro__back:hover,
-.trails-intro__back:focus-visible {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.trails-intro__title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-
-.trails-intro__lede {
-  margin-top: 0.35rem;
-  font-size: 0.95rem;
-  opacity: 0.9;
-}
-
-/* Cards now float over the landscape rather than a flat page, so they carry a
-   little more shadow to stay separated from it. */
-.trails-hero ~ .page .trail-card {
-  box-shadow: 0 6px 18px -8px rgba(24, 30, 20, 0.45);
-}
-
-.trail-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 560px) {
-  .trail-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 860px) {
-  .trail-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Flatter/simpler than the home page tree module — light border, no heavy shadow */
-.trail-card {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid transparent;
-  border-radius: var(--radius);
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 1px 3px rgba(32, 34, 24, 0.08);
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.trail-card:hover,
-.trail-card:focus-visible {
-  border-color: var(--color-accent);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px -8px rgba(32, 34, 24, 0.25);
-}
-
-.trail-card-image {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--color-bg);
-  overflow: hidden;
-}
-
-.trail-card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.trail-card-body {
-  padding: 1.1rem 1.25rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.trail-card-name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  line-height: 1.3;
-}
-
-.trail-card-location {
-  color: var(--color-text-muted);
-  font-size: 0.85rem;
-}
-
-.trail-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-
-/* GSMNP gets its own look since it'll show up often — flag it at a glance */
-.tag--gsmnp {
-  background: var(--color-accent);
-  color: var(--color-bg);
-}
-
-.trail-card-date {
-  margin-top: 0.5rem;
-  color: var(--color-text-muted);
-  font-size: 0.75rem;
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important}
 }

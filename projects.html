@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trail reviews — Ahmad Tobasei</title>
+  <title>Projects — Ahmad Tobasei</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <!-- body class drives the current-page marker in the shared nav -->
-<body class="page-trails">
+<body class="page-projects">
 
 <!-- Atmosphere: the site's ground texture. Present on every page. -->
 <div class="air" aria-hidden="true">
@@ -22,7 +22,7 @@
 
   <!-- ==========================================================================
        SHARED SITE HEADER — keep in sync across pages if edited.
-       This exact block also appears in index.html and projects.html. It never
+       This exact block also appears in index.html and trails.html. It never
        needs to differ between pages: the current page is marked by the <body>
        class (page-home / page-trails / page-projects), not by editing here.
        ========================================================================== -->
@@ -40,27 +40,28 @@
 
     <!-- ===== PAGE HEADING ===== -->
     <div class="page-head">
-      <h1>Trail reviews</h1>
+      <h1>Projects</h1>
       <!-- TODO: replace with a real intro if you want one -->
-      <p class="lede">Notes from hikes worth remembering.</p>
+      <p class="lede">Things I've built, mostly for fun.</p>
     </div>
 
     <!-- ==========================================================================
-         TRAIL CARD GRID
-         Rendered by trails.js from the entries in trails-data.js — add new hikes
-         there, never here. The id must stay "trail-grid": trails.js looks it up
-         by that id. Card markup and class names come from trails.js too.
+         PROJECT CARD GRID
+         Rendered by projects.js from the entries in projects-data.js — add new
+         projects there, never here. The id must stay "project-grid": projects.js
+         looks it up by that id. Cards share the trail-card treatment and stay
+         deliberately flatter than the home page's tree-of-the-day centrepiece.
          ========================================================================== -->
-    <div id="trail-grid" class="card-grid">
-      <!-- JS-rendered .trail-card elements go here -->
+    <div id="project-grid" class="card-grid">
+      <!-- JS-rendered .project-card elements go here -->
     </div>
 
   </main>
 </div>
 
-<!-- Trail data — edit this file to add or remove hikes -->
-<script src="trails-data.js"></script>
+<!-- Project data — edit this file to add or remove projects -->
+<script src="projects-data.js"></script>
 <!-- Renders the cards above from that data -->
-<script src="trails.js"></script>
+<script src="projects.js"></script>
 </body>
 </html>
