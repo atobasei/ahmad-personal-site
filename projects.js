@@ -1,11 +1,17 @@
 /* ==========================================================================
    PROJECTS — rendering
-   Reads window.PROJECTS_DATA (see projects-data.js) and renders one card per
-   entry into #project-grid. Mirrors trails.js so both pages behave the same.
+   Reads window.PROJECTS_DATA (see projects-data.js) and renders one
+   full-width row per entry into #project-list. Mirrors trails.js so both
+   pages stay data-driven in the same way.
+
+   Each row is a single anchor straight to the project's GitHub repo, opened
+   in a new tab. Styles live in section 9 of style.css under
+   .project-list / .project-row — deliberately flatter than the trail rows
+   and much flatter than the home page's tree-of-the-day well.
    ========================================================================== */
 (function () {
-  const grid = document.getElementById("project-grid");
-  if (!grid) return;
+  const list = document.getElementById("project-list");
+  if (!list) return;
 
   const projects = Array.isArray(window.PROJECTS_DATA) ? window.PROJECTS_DATA.slice() : [];
 
@@ -19,52 +25,22 @@
     });
   }
 
-  function renderTags(tags) {
-    if (!Array.isArray(tags)) return "";
-    return tags.map(function (tag) {
-      return '<span class="tag">' + escapeHtml(tag) + "</span>";
-    }).join("");
-  }
+  function renderRow(project) {
+    // Whole row is the link. External target, so noopener is required.
+    const row = document.createElement("a");
+    row.className = "project-row";
+    row.href = project.repoUrl || "#";
+    row.target = "_blank";
+    row.rel = "noopener";
 
-  // A project without a preview image gets a lettered tile rather than a
-  // broken image, so the grid still reads before any art exists.
-  function renderPreview(project) {
-    if (project.previewImage) {
-      return '<img src="' + escapeHtml(project.previewImage) + '" alt="' +
-             escapeHtml(project.name) + '" loading="lazy">';
-    }
-    const initial = escapeHtml((project.name || "?").trim().charAt(0).toUpperCase());
-    return '<div class="project-card-placeholder" aria-hidden="true">' + initial + "</div>";
-  }
+    row.innerHTML =
+      '<h2 class="project-row-title">' + escapeHtml(project.title) + "</h2>" +
+      '<p class="project-row-desc">' + escapeHtml(project.description) + "</p>";
 
-  function renderCard(project) {
-    // Linked projects are a whole-card anchor, like trail cards. Projects with
-    // no url yet render as a plain article so nothing links to nowhere.
-    const card = document.createElement(project.url ? "a" : "article");
-    card.className = "project-card";
-    if (project.url) {
-      card.href = project.url;
-      if (/^https?:/i.test(project.url)) {
-        card.target = "_blank";
-        card.rel = "noopener";
-      }
-    }
-
-    card.innerHTML =
-      '<div class="project-card-image">' + renderPreview(project) + "</div>" +
-      '<div class="project-card-body">' +
-        '<h2 class="project-card-name">' + escapeHtml(project.name) + "</h2>" +
-        '<p class="project-card-desc">' + escapeHtml(project.description) + "</p>" +
-        '<div class="project-tags">' + renderTags(project.tags) + "</div>" +
-        (project.url
-          ? '<p class="project-card-link">' + escapeHtml(project.linkLabel || "View project") + " &rarr;</p>"
-          : "") +
-      "</div>";
-
-    return card;
+    return row;
   }
 
   projects.forEach(function (project) {
-    grid.appendChild(renderCard(project));
+    list.appendChild(renderRow(project));
   });
 })();

@@ -30,7 +30,7 @@
     <a class="site-name" href="index.html">Ahmad Tobasei</a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="trails.html">Trail reviews</a>
+      <a href="trails.html">Trail Journal</a>
       <a href="projects.html">Projects</a>
     </nav>
   </header>
@@ -46,14 +46,15 @@
     </div>
 
     <!-- ==========================================================================
-         PROJECT CARD GRID
+         PROJECT LIST
          Rendered by projects.js from the entries in projects-data.js — add new
-         projects there, never here. The id must stay "project-grid": projects.js
-         looks it up by that id. Cards share the trail-card treatment and stay
-         deliberately flatter than the home page's tree-of-the-day centrepiece.
+         projects there, never here. The id must stay "project-list": projects.js
+         looks it up by that id. One full-width row per project, each row a link
+         straight to the repo. Kept deliberately flatter than the trail rows and
+         far flatter than the home page's tree-of-the-day centrepiece.
          ========================================================================== -->
-    <div id="project-grid" class="card-grid">
-      <!-- JS-rendered .project-card elements go here -->
+    <div id="project-list" class="project-list">
+      <!-- JS-rendered .project-row elements go here -->
     </div>
 
   </main>
@@ -61,7 +62,7 @@
 
 <!-- Project data — edit this file to add or remove projects -->
 <script src="projects-data.js"></script>
-<!-- Renders the cards above from that data -->
+<!-- Renders the rows above from that data -->
 <script src="projects.js"></script>
 </body>
 </html>

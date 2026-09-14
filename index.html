@@ -30,7 +30,7 @@
     <a class="site-name" href="index.html">Ahmad Tobasei</a>
     <nav class="site-nav" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="trails.html">Trail reviews</a>
+      <a href="trails.html">Trail Journal</a>
       <a href="projects.html">Projects</a>
     </nav>
   </header>
@@ -44,44 +44,52 @@
       <!-- TODO: replace with your real bio -->
       <p class="lede">This is my space to show a little bit about me, the things I
         enjoy and projects I work on. Read about the tree of the day, check out my
-        trail reviews, or feel free to reach out.</p>
+        trail journal, or feel free to reach out.</p>
     </div>
 
     <!-- ==========================================================================
          TREE OF THE DAY — the site's one recessed centrepiece.
          See "THE DEPTH RULE" at the top of style.css before changing this.
+
+         Rendered by trees.js from the entries in trees-data.js. The species
+         rotates once per calendar day at local midnight, and only entries
+         with a written `description` are eligible — so nothing here is edited
+         to change the tree. Add write-ups in trees-data.js instead.
+
+         The id must stay "tree-of-the-day-module": trees.js looks it up by it.
          ========================================================================== -->
     <section class="feature" aria-labelledby="tree-of-the-day">
-      <div class="well">
-        <!-- TODO: swap the frond artwork + name + note daily -->
-        <svg class="well-object" viewBox="0 0 120 120" role="img" aria-label="Hemlock frond">
-          <g stroke="#2c4436" stroke-linecap="round" fill="none">
-            <path d="M60 110 C58 80 58 44 60 14" stroke-width="2.4"/>
-            <g stroke-width="1.5" opacity=".92">
-              <path d="M59 96 C46 92 38 86 30 78"/><path d="M61 96 C74 92 82 86 90 78"/>
-              <path d="M59 84 C47 81 40 75 33 68"/><path d="M61 84 C73 81 80 75 87 68"/>
-              <path d="M59 72 C49 69 43 64 37 58"/><path d="M61 72 C71 69 77 64 83 58"/>
-              <path d="M59 60 C50 58 45 53 40 48"/><path d="M61 60 C70 58 75 53 80 48"/>
-              <path d="M59 48 C52 46 48 42 44 38"/><path d="M61 48 C68 46 72 42 76 38"/>
-              <path d="M59 37 C54 35 51 32 48 29"/><path d="M61 37 C66 35 69 32 72 29"/>
-              <path d="M59 27 C56 25 54 23 52 21"/><path d="M61 27 C64 25 66 23 68 21"/>
-            </g>
-          </g>
-        </svg>
-        <div class="well-copy">
-          <p class="feature-label">Tree of the day</p>
-          <h2 class="feature-name" id="tree-of-the-day">Eastern Hemlock</h2>
-          <p class="feature-note">Grows in deep shade for decades waiting for a gap
-            in the canopy, then climbs fast when one finally opens.</p>
-        </div>
+      <div class="well" id="tree-of-the-day-module">
+        <!-- JS-rendered. While no entry has a description written yet this
+             falls back to a "coming soon" state rather than vanishing, since
+             the well is what gives the home page its centrepiece. -->
       </div>
     </section>
+
+    <!-- Stand-in artwork for a tree whose image.src is still empty. Cloned
+         into the image frame by trees.js; swap the drawing here to change it. -->
+    <template id="tree-placeholder-art">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <g stroke="#2c4436" stroke-linecap="round" fill="none">
+          <path d="M60 110 C58 80 58 44 60 14" stroke-width="2.4"/>
+          <g stroke-width="1.5" opacity=".92">
+            <path d="M59 96 C46 92 38 86 30 78"/><path d="M61 96 C74 92 82 86 90 78"/>
+            <path d="M59 84 C47 81 40 75 33 68"/><path d="M61 84 C73 81 80 75 87 68"/>
+            <path d="M59 72 C49 69 43 64 37 58"/><path d="M61 72 C71 69 77 64 83 58"/>
+            <path d="M59 60 C50 58 45 53 40 48"/><path d="M61 60 C70 58 75 53 80 48"/>
+            <path d="M59 48 C52 46 48 42 44 38"/><path d="M61 48 C68 46 72 42 76 38"/>
+            <path d="M59 37 C54 35 51 32 48 29"/><path d="M61 37 C66 35 69 32 72 29"/>
+            <path d="M59 27 C56 25 54 23 52 21"/><path d="M61 27 C64 25 66 23 68 21"/>
+          </g>
+        </g>
+      </svg>
+    </template>
 
     <!-- ===== PAGES ===== -->
     <section class="block">
       <h2 class="section-label">Pages</h2>
       <ul class="rows">
-        <li><a href="trails.html"><span class="t">Trail reviews</span><span class="d">Notes from hikes worth remembering</span></a></li>
+        <li><a href="trails.html"><span class="t">Trail Journal</span><span class="d">Notes from hikes worth remembering</span></a></li>
         <li><a href="projects.html"><span class="t">Projects</span><span class="d">Tech, mostly for fun</span></a></li>
         <li><a href="#"><span class="t">Reading</span><span class="d">A running list</span></a></li>
       </ul>
@@ -101,8 +109,11 @@
   </main>
 </div>
 
-<!-- Home-page script slot. Currently empty; this is where the daily
-     tree-of-the-day rotation will live. -->
+<!-- Tree data — add write-ups here to put a species into rotation -->
+<script src="trees-data.js"></script>
+<!-- Picks the day's tree and renders the module above -->
+<script src="trees.js"></script>
+<!-- General home-page script slot -->
 <script src="script.js"></script>
 </body>
 </html>

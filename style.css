@@ -9,11 +9,13 @@
      3.  Atmosphere — the drifting washes behind every page
      4.  Shared site header / nav
      5.  Page shell + typography
-     6.  THE WELL — the recessed centrepiece (signature technique)
+     6.  THE WELL — the recessed centrepiece + tree-of-the-day module
      7.  Link rows (home page "Pages" list)
      8.  Social pills
-     9.  Card grid — trail + project cards
-     10. Tags
+     9.  Row lists — trail rows + project rows
+     10. Trail review — a single hike's page
+     11. Tags
+     12. Responsive
    ==========================================================================
 
    ── THE DEPTH RULE ────────────────────────────────────────────────────────
@@ -57,7 +59,7 @@
      depth read: sunk is darker than bg, surface is lighter than bg.
        --color-sunk     recessed  (the well floor)
        --color-bg       ground    (the page itself)
-       --color-surface  raised    (cards)
+       --color-surface  raised    (trail rows)
      Swapping any two of these breaks the depth rule above.                 */
   --color-bg:#e9ecea;          /* cool mist — the page ground */
   --color-sunk:#e0e6e2;        /* recessed: darker than the ground */
@@ -69,7 +71,7 @@
   --color-accent:#9a4a1e;      /* warm accent — dark enough to set type in */
   --color-deep:#0f1d17;        /* near-black, for inverted chips */
 
-  --color-line:rgba(24,36,30,.12);         /* hairlines, card borders */
+  --color-line:rgba(24,36,30,.12);         /* hairlines, row borders */
   --color-line-strong:rgba(24,36,30,.26);  /* hover borders */
 
   /* ---- Typography -------------------------------------------------------
@@ -82,7 +84,7 @@
   --text-base:1rem;
   --text-lede:clamp(1.02rem,1.5vw,1.12rem);  /* bio / page intro */
   --text-row:1.2rem;                         /* link-row titles */
-  --text-card:1.18rem;                       /* card titles */
+  --text-card:1.18rem;                       /* trail + project row titles */
   --text-h2:clamp(1.45rem,3.4vw,1.85rem);    /* centrepiece title */
   --text-h1:clamp(2.4rem,6.4vw,3.6rem);      /* page heading */
   --text-h1-home:clamp(2.6rem,7vw,4rem);     /* home page name, one step up */
@@ -111,7 +113,7 @@
 
   /* ---- Depth ------------------------------------------------------------
      --shadow-sunk is the signature and belongs to `.well` only.
-     Cards use --shadow-card, which is deliberately much weaker.            */
+     Trail rows use --shadow-card, which is deliberately much weaker.       */
   --shadow-sunk:
     inset 0 2px 5px rgba(15,29,23,.16),
     inset 0 14px 28px -14px rgba(15,29,23,.34),
@@ -126,7 +128,7 @@
 
   /* ---- Layout ----------------------------------------------------------- */
   --measure:720px;      /* reading column (home) */
-  --measure-wide:1040px;/* grid pages (trails, projects) */
+  --measure-wide:1040px;/* list pages (trails, projects) */
   --ease:.18s ease;
 }
 
@@ -265,12 +267,51 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   background:linear-gradient(118deg,rgba(255,242,226,.55) 0%,transparent 46%);
 }
 /* 5. contents sit above the gradient and cast their own shadow */
-.well-object{
-  width:132px;height:132px;flex:0 0 auto;
+.well-copy{flex:1 1 280px;min-width:0;position:relative;z-index:1}
+
+/* ---- The image frame — the raised object inside the recess ---------------
+   This is the second layer of the module: the well is carved INTO the page,
+   and the photo frame sits UP out of the well's floor. That contrast is the
+   whole depth effect, and it is why this frame gets a real cast shadow while
+   the flatter trail/project rows elsewhere get almost none. Do not give this
+   an inset shadow — per THE DEPTH RULE, the well must stay the only recess. */
+.tree-figure{
   position:relative;z-index:1;
-  filter:drop-shadow(var(--shadow-object));
+  flex:0 0 clamp(150px,28%,220px);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  background:linear-gradient(140deg,#dfe6e1,#eaeeea);
+  box-shadow:var(--shadow-object);
 }
-.well-copy{flex:1 1 250px;min-width:0;position:relative;z-index:1}
+/* portrait 4:5 — trees are tall. Sets the frame's height from its width, so
+   the frame keeps its proportions no matter how long the write-up runs. */
+.tree-figure::before{content:"";display:block;padding-top:125%}
+.tree-figure img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
+}
+
+/* Drawn stand-in shown until an entry has a real photo. Deliberately not a
+   grey box: it keeps the same frame, shadow and proportions a photo will get,
+   so the module looks finished rather than broken while photos are missing. */
+.tree-figure__placeholder{
+  position:absolute;inset:0;
+  display:grid;place-content:center;
+}
+.tree-figure__placeholder svg{
+  width:64%;max-width:130px;height:auto;
+  opacity:.5;
+}
+
+/* Photo credit — small, over the bottom of the image, never competing with
+   the copy. Only rendered when there is both a photo and a credit string. */
+.tree-figure__credit{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:1.25rem .65rem .5rem;
+  font-size:.66rem;line-height:1.35;
+  color:rgba(255,255,255,.94);
+  background:linear-gradient(transparent,rgba(15,29,23,.78));
+}
 
 .feature-label{
   font-size:.74rem;font-weight:600;
@@ -282,7 +323,30 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   font-size:var(--text-h2);line-height:var(--leading-tight);
   margin:0 0 var(--space-2);
 }
-.feature-note{color:var(--color-ink-muted);font-size:var(--text-base);max-width:40ch}
+.feature-note{color:var(--color-ink-muted);font-size:var(--text-base);max-width:46ch}
+.feature-note + .feature-note{margin-top:var(--space-3)}  /* multi-paragraph write-ups */
+
+/* scientific name — italic, secondary, sits directly under the common name */
+.tree-sci{
+  font-family:var(--font-display);font-style:italic;
+  font-size:var(--text-base);color:var(--color-ink-muted);
+  margin:0 0 var(--space-3);
+}
+
+/* fun fact — marked off by an accent rule rather than another box, so it
+   stays inside the well instead of reading as a second card */
+.tree-fact{
+  margin-top:var(--space-5);
+  padding-left:var(--space-4);
+  border-left:2px solid var(--color-accent);
+  max-width:46ch;
+}
+.tree-fact__label{
+  font-size:.72rem;font-weight:600;
+  letter-spacing:var(--tracking-label);text-transform:uppercase;
+  color:var(--color-accent);margin-bottom:var(--space-1);
+}
+.tree-fact__text{color:var(--color-ink-muted);font-size:var(--text-sm)}
 
 
 /* ==========================================================================
@@ -332,20 +396,23 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 
 
 /* ==========================================================================
-   9. CARD GRID — trail cards and project cards share one treatment
-   Deliberately much flatter than `.well`: a hairline, a weak shadow, and a
-   2px hover lift. Nothing here should compete with the centrepiece.
-   NOTE: .trail-card / .trail-card-* class names are produced by trails.js and
-   .project-card / .project-card-* by projects.js — do not rename them here
+   9. ROW LISTS — trail rows and project rows
+   Both pages list one full-width horizontal row per entry, stacked
+   vertically; neither is a card grid. Both stay deliberately flatter than
+   `.well` so nothing competes with the centrepiece — trail rows get a
+   hairline, a weak shadow and a 2px hover lift; project rows are flatter
+   still (hairline + a background shift on hover, no resting shadow).
+   NOTE: .trail-row / .trail-row-* class names are produced by trails.js and
+   .project-row / .project-row-* by projects.js — do not rename them here
    without updating those files.
    ========================================================================== */
-.card-grid{display:grid;grid-template-columns:1fr;gap:var(--space-5)}
-@media (min-width:560px){ .card-grid{grid-template-columns:repeat(2,1fr)} }
-@media (min-width:900px){ .card-grid{grid-template-columns:repeat(3,1fr)} }
+.trail-list,
+.project-list{display:flex;flex-direction:column;gap:var(--space-4)}
 
-.trail-card,
-.project-card{
-  display:flex;flex-direction:column;
+
+/* ---- Trail rows: image on one side, the hike's info stacked beside it ---- */
+.trail-row{
+  display:flex;align-items:stretch;
   background:var(--color-surface);
   border:1px solid var(--color-line);
   border-radius:var(--radius-md);
@@ -354,60 +421,183 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   box-shadow:var(--shadow-card);
   transition:transform var(--ease),box-shadow var(--ease),border-color var(--ease);
 }
-.trail-card:hover,.trail-card:focus-visible,
-.project-card:hover,.project-card:focus-visible{
+.trail-row:hover,.trail-row:focus-visible{
   transform:translateY(-2px);
   box-shadow:var(--shadow-card-hover);
   border-color:var(--color-line-strong);
 }
 
-.trail-card-image,
-.project-card-image{
-  width:100%;aspect-ratio:4 / 3;overflow:hidden;
+/* Fixed width, so every thumbnail lines up down the page. The ::before sets
+   a 4:3 floor on the height; if the info column runs taller than that, the
+   image stretches to match rather than leaving a gap beside it. Either way
+   object-fit:cover keeps the crop consistent. */
+.trail-row-image{
+  position:relative;
+  flex:0 0 clamp(140px,24vw,260px);
+  align-self:stretch;overflow:hidden;
   background:var(--color-sunk);
 }
-.trail-card-image img,
-.project-card-image img{width:100%;height:100%;object-fit:cover}
-
-/* fallback tile for a project with no preview image yet */
-.project-card-placeholder{
-  width:100%;height:100%;display:grid;place-content:center;
-  background:linear-gradient(140deg,#dfe6e1,#eaeeea);
-  font-family:var(--font-display);font-size:2.4rem;font-weight:500;
-  color:var(--color-label);
+.trail-row-image::before{content:"";display:block;padding-top:75%}
+.trail-row-image img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
 }
 
-.trail-card-body,
-.project-card-body{
-  padding:1.1rem 1.25rem 1.25rem;
-  display:flex;flex-direction:column;gap:var(--space-1);
+.trail-row-body{
+  flex:1 1 auto;min-width:0;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:var(--space-1);
+  padding:var(--space-4) clamp(1rem,2.5vw,1.5rem);
 }
-.trail-card-name,
-.project-card-name{
+.trail-row-name{
   font-family:var(--font-display);font-weight:500;
   font-size:var(--text-card);line-height:1.25;
   letter-spacing:normal;text-transform:none;color:var(--color-ink);
   margin:0;
 }
-.trail-card-location,
-.project-card-desc{color:var(--color-ink-muted);font-size:var(--text-sm)}
-.project-card-desc{margin-top:var(--space-1)}
-
-.trail-card-date,
-.project-card-link{
+.trail-row-location{color:var(--color-ink-muted);font-size:var(--text-sm)}
+.trail-row-date{
   margin-top:var(--space-2);
   color:var(--color-ink-muted);font-size:.78rem;
 }
-.project-card-link{color:var(--color-accent);font-weight:600}
+
+
+/* ---- Project rows: title over description, whole row links to the repo ----
+   Flatter than the trail rows on purpose — a secondary page's list, not a
+   showcase. No resting shadow; hover is a background shift and a 1px lift. */
+.project-row{
+  display:block;
+  padding:var(--space-4) clamp(1rem,2.5vw,1.5rem);
+  border:1px solid var(--color-line);
+  border-radius:var(--radius-md);
+  background:transparent;
+  text-decoration:none;color:inherit;
+  transition:background var(--ease),border-color var(--ease),transform var(--ease);
+}
+.project-row:hover,.project-row:focus-visible{
+  background:var(--color-surface);
+  border-color:var(--color-line-strong);
+  transform:translateY(-1px);
+}
+.project-row-title{
+  font-family:var(--font-display);font-weight:500;
+  font-size:var(--text-card);line-height:1.25;
+  letter-spacing:normal;text-transform:none;color:var(--color-ink);
+  margin:0;
+}
+/* Every project row opens GitHub in a new tab, so each one is marked. Done
+   in CSS rather than markup so projects.js stays content-only. */
+.project-row-title::after{
+  content:"\2197";
+  font-family:var(--font-body);font-size:.8em;
+  margin-left:.35em;color:var(--color-label);
+  transition:color var(--ease);
+}
+.project-row:hover .project-row-title::after,
+.project-row:focus-visible .project-row-title::after{color:var(--color-accent)}
+
+.project-row-desc{
+  margin-top:var(--space-2);max-width:72ch;
+  color:var(--color-ink-muted);font-size:var(--text-sm);
+}
 
 
 /* ==========================================================================
-   10. TAGS
-   "gsmnp" gets its own fill because it recurs often enough to be worth
-   spotting at a glance — see renderTags() in trails.js.
+   10. TRAIL REVIEW — a single hike's page (trail-review.html)
+   Markup comes from trail-review.js.
+
+   DELIBERATELY FLAT — no well, no raised panels, no shadows on the photos.
+   These pages are a journal, not a trail guide: the writing is the point, and
+   the photographs carry the visual weight. THE DEPTH RULE allows at most one
+   dimensional element per page; this page uses none, on purpose. Resist
+   adding a recessed stats panel — it would make the numbers the centrepiece
+   of a page whose whole purpose is the opposite.
    ========================================================================== */
-.trail-tags,
-.project-tags{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-2)}
+
+/* back to the index, above the hike */
+.back-link{
+  display:inline-block;margin-bottom:var(--space-6);
+  color:var(--color-ink-muted);font-size:var(--text-sm);font-weight:500;
+  text-decoration:none;
+  transition:color var(--ease),transform var(--ease);
+}
+.back-link::before{content:"\2190";margin-right:.45em}
+.back-link:hover,.back-link:focus-visible{
+  color:var(--color-accent);transform:translateX(-.2rem);
+}
+
+/* The page opens on the place, then talks about it. Full width of the
+   reading column, 3:2 — a landscape crop suits a summit shot. */
+.trail-review__lead{
+  margin:0 0 var(--space-6);
+  border-radius:var(--radius-md);overflow:hidden;
+  background:var(--color-sunk);
+  aspect-ratio:3 / 2;
+}
+.trail-review__lead img{width:100%;height:100%;object-fit:cover}
+
+.trail-review__head{margin-bottom:var(--space-6)}
+.trail-review__name{
+  font-family:var(--font-display);font-weight:500;
+  font-size:var(--text-h1);line-height:1.05;letter-spacing:-.018em;
+  margin:0;
+}
+
+/* location · date · mileage — one quiet line. Mileage is the only stat on
+   the page and it belongs here, inline, not in a panel of its own. */
+.trail-review__meta{
+  margin-top:var(--space-3);
+  color:var(--color-ink-muted);font-size:var(--text-sm);
+}
+.trail-review__sep{margin:0 .5em;opacity:.5}
+
+/* the write-up — the reason the page exists */
+.trail-review__para{
+  max-width:64ch;
+  font-size:var(--text-lede);
+  color:var(--color-ink);
+}
+.trail-review__para + .trail-review__para{margin-top:var(--space-4)}
+
+/* Gallery: full-width photos stacked down the page, so each shot gets room
+   to land rather than being shrunk into a grid. */
+.trail-gallery{
+  margin-top:var(--space-section);
+  display:flex;flex-direction:column;gap:var(--space-6);
+}
+.trail-photo{
+  margin:0;
+  border-radius:var(--radius-md);overflow:hidden;
+  background:var(--color-sunk);
+}
+.trail-photo img{width:100%;height:auto;display:block}
+/* Captions are optional per photo — nothing renders when absent. */
+.trail-photo__caption{
+  padding:var(--space-3) var(--space-1) 0;
+  color:var(--color-ink-muted);font-size:var(--text-sm);
+  max-width:64ch;
+}
+
+/* not-found state: a mistyped id, or a hike removed from the data file */
+.trail-review__back{
+  display:inline-block;margin-top:var(--space-5);
+  color:var(--color-accent);font-weight:600;font-size:var(--text-sm);
+  text-decoration:none;
+  border-bottom:1px solid transparent;
+  transition:border-color var(--ease);
+}
+.trail-review__back:hover,.trail-review__back:focus-visible{
+  border-bottom-color:var(--color-accent);
+}
+
+
+/* ==========================================================================
+   11. TAGS
+   "gsmnp" gets its own fill because it recurs often enough to be worth
+   spotting at a glance — see renderTags() in trails.js and makeTags() in
+   trail-review.js.
+   ========================================================================== */
+.trail-tags{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-2)}
 .tag{
   display:inline-flex;align-items:center;
   background:var(--color-bg);color:var(--color-ink-muted);
@@ -419,12 +609,29 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 
 
 /* ==========================================================================
-   11. RESPONSIVE
+   12. RESPONSIVE
    ========================================================================== */
+/* A true side-by-side trail row gets too cramped on a narrow screen — the
+   info column ends up a few words wide — so the image goes back on top. */
+@media (max-width:640px){
+  .trail-row{flex-direction:column}
+  .trail-row-image{flex:0 0 auto;width:100%}
+  .trail-row-image::before{padding-top:60%}   /* wider crop when full-bleed */
+  .trail-row-body{justify-content:flex-start}
+}
+
+/* Below this the well's two columns get too narrow to be worth keeping side
+   by side, so the image frame goes full width above the copy. `.well` already
+   wraps; this just stops the frame collapsing to a sliver first. */
+@media (max-width:560px){
+  .tree-figure{flex:1 1 100%}
+  .tree-figure::before{padding-top:72%}   /* landscape crop when full-width */
+  .tree-figure__placeholder svg{width:34%}
+}
+
 @media (max-width:520px){
   .site-header{gap:var(--space-3)}
   .site-nav{gap:var(--space-4)}
-  .well-object{width:104px;height:104px}
   .rows a{gap:var(--space-3)}
 }
 

@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Generic on purpose: this one file serves every hike, so trail-review.js
+       replaces this with the hike's name once it knows which one to render. -->
   <title>Trail Journal — Ahmad Tobasei</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,400;0,500;0,600;1,400&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<!-- body class drives the current-page marker in the shared nav -->
+<!-- page-trails, not a page class of its own: a review IS part of the Trail
+     Journal section, so the nav should mark Trail Journal as current here. -->
 <body class="page-trails">
 
 <!-- Atmosphere: the site's ground texture. Present on every page. -->
@@ -18,13 +21,14 @@
   <span class="band"></span>
 </div>
 
-<div class="page page--wide">
+<div class="page">
 
   <!-- ==========================================================================
        SHARED SITE HEADER — keep in sync across pages if edited.
-       This exact block also appears in index.html and projects.html. It never
-       needs to differ between pages: the current page is marked by the <body>
-       class (page-home / page-trails / page-projects), not by editing here.
+       This exact block also appears in index.html, trails.html and
+       projects.html. It never needs to differ between pages: the current page
+       is marked by the <body> class (page-home / page-trails / page-projects),
+       not by editing here.
        ========================================================================== -->
   <header class="site-header">
     <a class="site-name" href="index.html">Ahmad Tobasei</a>
@@ -38,31 +42,31 @@
 
   <main>
 
-    <!-- ===== PAGE HEADING ===== -->
-    <div class="page-head">
-      <h1>Trail Journal</h1>
-      <!-- TODO: replace with a real intro if you want one -->
-      <p class="lede">Notes from hikes worth remembering.</p>
-    </div>
+    <a class="back-link" href="trails.html">Trail Journal</a>
 
     <!-- ==========================================================================
-         TRAIL LIST
-         Rendered by trails.js from the entries in trails-data.js — add new hikes
-         there, never here. The id must stay "trail-grid": trails.js looks it up
-         by that id (kept as-is so no existing script breaks, even though the
-         layout is now a single-column list of rows rather than a grid). Row
-         markup and class names come from trails.js too.
+         ONE PAGE, EVERY HIKE
+         This file is a template. Which hike it shows comes from the query
+         string, e.g.  trail-review.html?id=mount-leconte-via-alum-cave-trail
+         — trail-review.js reads that id, finds the matching entry in
+         trails-data.js and renders into the element below.
+
+         So there is no per-hike HTML file to create: adding a hike means
+         adding an object to trails-data.js and nothing else.
+
+         The id must stay "trail-review": trail-review.js looks it up by it.
          ========================================================================== -->
-    <div id="trail-grid" class="trail-list">
-      <!-- JS-rendered .trail-row elements go here -->
-    </div>
+    <article id="trail-review">
+      <!-- JS-rendered. Falls back to a "not found" state when the id is
+           missing or matches no entry. -->
+    </article>
 
   </main>
 </div>
 
-<!-- Trail data — edit this file to add or remove hikes -->
+<!-- Trail data — the same file the Trail Journal index reads -->
 <script src="trails-data.js"></script>
-<!-- Renders the rows above from that data -->
-<script src="trails.js"></script>
+<!-- Reads ?id= and renders the hike above -->
+<script src="trail-review.js"></script>
 </body>
 </html>
