@@ -277,7 +277,11 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
    an inset shadow — per THE DEPTH RULE, the well must stay the only recess. */
 .tree-figure{
   position:relative;z-index:1;
-  flex:0 0 clamp(150px,28%,220px);
+  /* ~40% of the well. Big enough to carry a photograph, but NOT full width:
+     the floor has to stay visible around it or the photo stops reading as an
+     object sitting in the recess and starts reading as the recess's surface,
+     which throws away the effect the whole module is built on. */
+  flex:0 0 clamp(180px,40%,280px);
   border-radius:var(--radius-md);
   overflow:hidden;
   background:linear-gradient(140deg,#dfe6e1,#eaeeea);
@@ -330,23 +334,15 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 .tree-sci{
   font-family:var(--font-display);font-style:italic;
   font-size:var(--text-base);color:var(--color-ink-muted);
-  margin:0 0 var(--space-3);
+  margin:0;
 }
 
-/* fun fact — marked off by an accent rule rather than another box, so it
-   stays inside the well instead of reading as a second card */
-.tree-fact{
-  margin-top:var(--space-5);
-  padding-left:var(--space-4);
-  border-left:2px solid var(--color-accent);
-  max-width:46ch;
+/* where it grows — quieter than the scientific name, and the last line of the
+   naming block before the write-up starts */
+.tree-range{
+  margin:var(--space-1) 0 var(--space-4);
+  font-size:var(--text-sm);color:var(--color-label);
 }
-.tree-fact__label{
-  font-size:.72rem;font-weight:600;
-  letter-spacing:var(--tracking-label);text-transform:uppercase;
-  color:var(--color-accent);margin-bottom:var(--space-1);
-}
-.tree-fact__text{color:var(--color-ink-muted);font-size:var(--text-sm)}
 
 
 /* ==========================================================================
@@ -622,8 +618,10 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 
 /* Below this the well's two columns get too narrow to be worth keeping side
    by side, so the image frame goes full width above the copy. `.well` already
-   wraps; this just stops the frame collapsing to a sliver first. */
-@media (max-width:560px){
+   wraps; this just stops the frame collapsing to a sliver first.
+   Raised from 560px when the figure grew to 40%: a wider figure squeezes the
+   copy column into a few words per line sooner than a narrow one did. */
+@media (max-width:620px){
   .tree-figure{flex:1 1 100%}
   .tree-figure::before{padding-top:72%}   /* landscape crop when full-width */
   .tree-figure__placeholder svg{width:34%}

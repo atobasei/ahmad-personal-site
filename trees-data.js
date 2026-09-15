@@ -12,12 +12,13 @@
      id              slug, kebab-case of the common name — stable lookup key
      commonName      display name
      scientificName  binomial, rendered in italics
-     range           free-text range/habitat note; "" until written
-     ecoregion       array of ecoregion names; [] until known
-     description     the write-up. THIS FIELD IS THE ON/OFF SWITCH: a tree is
-                     only eligible to be featured once this is non-empty, so
-                     half-finished entries never show up on the home page.
-     funFacts        array of strings; the first one is what renders
+     range           where it grows, written broadly: "Eastern U.S.",
+                     "Southern Appalachians". Already filled in for all 63.
+     description     YOUR QUIP about the tree — whatever you find worth saying.
+                     THIS FIELD IS THE ON/OFF SWITCH: a tree is only eligible
+                     to be featured once this is non-empty, so entries you
+                     haven't written yet never show up on the home page.
+                     A BLANK LINE starts a new paragraph.
      image.src       path to a photo, or "" for the drawn placeholder. Photos
                      live flat in images/trees/ named after the entry's `id`,
                      e.g. "images/trees/eastern-hemlock.jpg" — see
@@ -30,20 +31,18 @@
                      nothing. Fill this in for any photo that isn't your own.
      image.sourceUrl reference only, for Ahmad — never rendered anywhere.
 
-   TO ADD A WRITE-UP: fill in `description` (and optionally funFacts/image) on
-   an entry below. Nothing else needs touching — not the HTML, not trees.js.
+   TO PUT A TREE INTO ROTATION: write its `description`. Nothing else needs
+   touching — not the HTML, not trees.js.
    ========================================================================== */
 window.TREES_DATA = [
   {
     id: "american-beech",
     commonName: "American Beech",
     scientificName: "Fagus grandifolia",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "Easy to recognize even from a distance — smooth, pale gray bark that stays smooth for the tree's whole life, unlike almost every other hardwood. Beeches tend to hold onto their dried, papery leaves through much of winter, a trait called marcescence, so a beech grove in January still looks half-dressed.\n\nThat smooth bark is also why beech trees are the most carved-on trees in America — old initials can stay legible for decades.",
     image: {
-      src: "",
+      src: "images/trees/american-beech.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -52,12 +51,10 @@ window.TREES_DATA = [
     id: "green-ash",
     commonName: "Green Ash",
     scientificName: "Fraxinus pennsylvanica",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Canada",
+    description: "PLACEHOLDER — write your quip about the Green Ash here.",
     image: {
-      src: "",
+      src: "images/trees/green-ash.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -66,12 +63,10 @@ window.TREES_DATA = [
     id: "white-ash",
     commonName: "White Ash",
     scientificName: "Fraxinus americana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the White Ash here.",
     image: {
-      src: "",
+      src: "images/trees/white-ash.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -80,12 +75,10 @@ window.TREES_DATA = [
     id: "american-basswood",
     commonName: "American Basswood",
     scientificName: "Tilia americana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Northeastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the American Basswood here.",
     image: {
-      src: "",
+      src: "images/trees/american-basswood.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -94,12 +87,10 @@ window.TREES_DATA = [
     id: "baldcypress",
     commonName: "Baldcypress",
     scientificName: "Taxodium distichum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S. and the lower Mississippi Valley",
+    description: "PLACEHOLDER — write your quip about the Baldcypress here.",
     image: {
-      src: "",
+      src: "images/trees/baldcypress.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -108,12 +99,10 @@ window.TREES_DATA = [
     id: "black-cherry",
     commonName: "Black Cherry",
     scientificName: "Prunus serotina",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the Black Cherry here.",
     image: {
-      src: "",
+      src: "images/trees/black-cherry.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -122,12 +111,10 @@ window.TREES_DATA = [
     id: "black-walnut",
     commonName: "Black Walnut",
     scientificName: "Juglans nigra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Black Walnut here.",
     image: {
-      src: "",
+      src: "images/trees/black-walnut.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -136,12 +123,10 @@ window.TREES_DATA = [
     id: "blackgum",
     commonName: "Blackgum",
     scientificName: "Nyssa sylvatica",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Blackgum here.",
     image: {
-      src: "",
+      src: "images/trees/blackgum.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -150,12 +135,10 @@ window.TREES_DATA = [
     id: "boxelder",
     commonName: "Boxelder",
     scientificName: "Acer negundo",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Across much of the U.S. and southern Canada",
+    description: "PLACEHOLDER — write your quip about the Boxelder here.",
     image: {
-      src: "",
+      src: "images/trees/boxelder.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -164,12 +147,10 @@ window.TREES_DATA = [
     id: "ohio-buckeye",
     commonName: "Ohio Buckeye",
     scientificName: "Aesculus glabra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Midwestern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Ohio Buckeye here.",
     image: {
-      src: "",
+      src: "images/trees/ohio-buckeye.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -178,12 +159,10 @@ window.TREES_DATA = [
     id: "yellow-buckeye",
     commonName: "Yellow Buckeye",
     scientificName: "Aesculus flava",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Ohio Valley and Appalachian U.S.",
+    description: "PLACEHOLDER — write your quip about the Yellow Buckeye here.",
     image: {
-      src: "",
+      src: "images/trees/yellow-buckeye.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -192,12 +171,10 @@ window.TREES_DATA = [
     id: "red-buckeye",
     commonName: "Red Buckeye",
     scientificName: "Aesculus pavia",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Red Buckeye here.",
     image: {
-      src: "",
+      src: "images/trees/red-buckeye.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -206,12 +183,10 @@ window.TREES_DATA = [
     id: "eastern-cottonwood",
     commonName: "Eastern Cottonwood",
     scientificName: "Populus deltoides",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Canada",
+    description: "PLACEHOLDER — write your quip about the Eastern Cottonwood here.",
     image: {
-      src: "",
+      src: "images/trees/eastern-cottonwood.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -220,12 +195,10 @@ window.TREES_DATA = [
     id: "eastern-redcedar",
     commonName: "Eastern Redcedar",
     scientificName: "Juniperus virginiana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Eastern Redcedar here.",
     image: {
-      src: "",
+      src: "images/trees/eastern-redcedar.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -234,12 +207,10 @@ window.TREES_DATA = [
     id: "american-elm",
     commonName: "American Elm",
     scientificName: "Ulmus americana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Canada",
+    description: "PLACEHOLDER — write your quip about the American Elm here.",
     image: {
-      src: "",
+      src: "images/trees/american-elm.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -248,12 +219,10 @@ window.TREES_DATA = [
     id: "slippery-elm",
     commonName: "Slippery Elm",
     scientificName: "Ulmus rubra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Slippery Elm here.",
     image: {
-      src: "",
+      src: "images/trees/slippery-elm.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -262,12 +231,10 @@ window.TREES_DATA = [
     id: "winged-elm",
     commonName: "Winged Elm",
     scientificName: "Ulmus alata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Winged Elm here.",
     image: {
-      src: "",
+      src: "images/trees/winged-elm.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -276,10 +243,8 @@ window.TREES_DATA = [
     id: "flowering-dogwood",
     commonName: "Flowering Dogwood",
     scientificName: "Cornus florida",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Flowering Dogwood here.",
     image: {
       src: "",
       credit: "",
@@ -290,26 +255,10 @@ window.TREES_DATA = [
     id: "hackberry",
     commonName: "Hackberry",
     scientificName: "Celtis occidentalis",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Hackberry here.",
     image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "sugarberry",
-    commonName: "Sugarberry",
-    scientificName: "Celtis laevigata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
+      src: "images/trees/hackberry.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -318,12 +267,10 @@ window.TREES_DATA = [
     id: "eastern-hemlock",
     commonName: "Eastern Hemlock",
     scientificName: "Tsuga canadensis",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Northeastern U.S. and southeastern Canada, south through the Appalachians",
+    description: "PLACEHOLDER — write your quip about the Eastern Hemlock here.",
     image: {
-      src: "",
+      src: "images/trees/eastern-hemlock.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -332,12 +279,10 @@ window.TREES_DATA = [
     id: "carolina-hemlock",
     commonName: "Carolina Hemlock",
     scientificName: "Tsuga caroliniana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southern Appalachians",
+    description: "PLACEHOLDER — write your quip about the Carolina Hemlock here.",
     image: {
-      src: "",
+      src: "images/trees/carolina-hemlock.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -346,12 +291,10 @@ window.TREES_DATA = [
     id: "bitternut-hickory",
     commonName: "Bitternut Hickory",
     scientificName: "Carya cordiformis",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the Bitternut Hickory here.",
     image: {
-      src: "",
+      src: "images/trees/bitternut-hickory.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -360,12 +303,10 @@ window.TREES_DATA = [
     id: "mockernut-hickory",
     commonName: "Mockernut Hickory",
     scientificName: "Carya tomentosa",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Mockernut Hickory here.",
     image: {
-      src: "",
+      src: "images/trees/mockernut-hickory.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -374,12 +315,10 @@ window.TREES_DATA = [
     id: "pignut-hickory",
     commonName: "Pignut Hickory",
     scientificName: "Carya glabra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Pignut Hickory here.",
     image: {
-      src: "",
+      src: "images/trees/pignut-hickory.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -388,12 +327,10 @@ window.TREES_DATA = [
     id: "shagbark-hickory",
     commonName: "Shagbark Hickory",
     scientificName: "Carya ovata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the Shagbark Hickory here.",
     image: {
-      src: "",
+      src: "images/trees/shagbark-hickory.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -402,12 +339,10 @@ window.TREES_DATA = [
     id: "shellbark-hickory",
     commonName: "Shellbark Hickory",
     scientificName: "Carya laciniosa",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Ohio and upper Mississippi Valleys",
+    description: "PLACEHOLDER — write your quip about the Shellbark Hickory here.",
     image: {
-      src: "",
+      src: "images/trees/shellbark-hickory.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -416,12 +351,10 @@ window.TREES_DATA = [
     id: "black-locust",
     commonName: "Black Locust",
     scientificName: "Robinia pseudoacacia",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Appalachian and Ozark U.S., naturalized far beyond",
+    description: "PLACEHOLDER — write your quip about the Black Locust here.",
     image: {
-      src: "",
+      src: "images/trees/black-locust.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -430,12 +363,10 @@ window.TREES_DATA = [
     id: "honey-locust",
     commonName: "Honey Locust",
     scientificName: "Gleditsia triacanthos",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Central and eastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Honey Locust here.",
     image: {
-      src: "",
+      src: "images/trees/honey-locust.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -444,12 +375,10 @@ window.TREES_DATA = [
     id: "red-maple",
     commonName: "Red Maple",
     scientificName: "Acer rubrum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and eastern Canada",
+    description: "PLACEHOLDER — write your quip about the Red Maple here.",
     image: {
-      src: "",
+      src: "images/trees/red-maple.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -458,12 +387,10 @@ window.TREES_DATA = [
     id: "silver-maple",
     commonName: "Silver Maple",
     scientificName: "Acer saccharinum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the Silver Maple here.",
     image: {
-      src: "",
+      src: "images/trees/silver-maple.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -472,12 +399,10 @@ window.TREES_DATA = [
     id: "sugar-maple",
     commonName: "Sugar Maple",
     scientificName: "Acer saccharum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Northeastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the Sugar Maple here.",
     image: {
-      src: "",
+      src: "images/trees/sugar-maple.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -486,26 +411,10 @@ window.TREES_DATA = [
     id: "black-oak",
     commonName: "Black Oak",
     scientificName: "Quercus velutina",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Black Oak here.",
     image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "blackjack-oak",
-    commonName: "Blackjack Oak",
-    scientificName: "Quercus marilandica",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
+      src: "images/trees/black-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -514,26 +423,10 @@ window.TREES_DATA = [
     id: "bur-oak",
     commonName: "Bur Oak",
     scientificName: "Quercus macrocarpa",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Central and midwestern U.S. and south-central Canada",
+    description: "PLACEHOLDER — write your quip about the Bur Oak here.",
     image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "cherrybark-oak",
-    commonName: "Cherrybark Oak",
-    scientificName: "Quercus pagoda",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
+      src: "images/trees/bur-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -542,54 +435,10 @@ window.TREES_DATA = [
     id: "chestnut-oak",
     commonName: "Chestnut Oak",
     scientificName: "Quercus prinus",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S., centered on the Appalachians",
+    description: "PLACEHOLDER — write your quip about the Chestnut Oak here.",
     image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "chinkapin-oak",
-    commonName: "Chinkapin Oak",
-    scientificName: "Quercus muehlenbergii",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "northern-red-oak",
-    commonName: "Northern Red Oak",
-    scientificName: "Quercus rubra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "nuttall-oak",
-    commonName: "Nuttall Oak",
-    scientificName: "Quercus nuttallii",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
+      src: "images/trees/chestnut-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -598,12 +447,10 @@ window.TREES_DATA = [
     id: "pin-oak",
     commonName: "Pin Oak",
     scientificName: "Quercus palustris",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Pin Oak here.",
     image: {
-      src: "",
+      src: "images/trees/pin-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -612,96 +459,22 @@ window.TREES_DATA = [
     id: "post-oak",
     commonName: "Post Oak",
     scientificName: "Quercus stellata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and south-central U.S.",
+    description: "PLACEHOLDER — write your quip about the Post Oak here.",
     image: {
-      src: "",
+      src: "images/trees/post-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
   },
   {
-    id: "scarlet-oak",
-    commonName: "Scarlet Oak",
-    scientificName: "Quercus coccinea",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    id: "live-oak",
+    commonName: "Live Oak",
+    scientificName: "Quercus virginiana",
+    range: "Southeastern U.S. coastal plain",
+    description: "PLACEHOLDER — write your quip about the Live Oak here.",
     image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "southern-red-oak",
-    commonName: "Southern Red Oak",
-    scientificName: "Quercus falcata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "shingle-oak",
-    commonName: "Shingle Oak",
-    scientificName: "Quercus imbricaria",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "shumard-oak",
-    commonName: "Shumard Oak",
-    scientificName: "Quercus shumardii",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "swamp-chestnut-oak",
-    commonName: "Swamp Chestnut Oak",
-    scientificName: "Quercus michauxii",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
-      credit: "",
-      sourceUrl: ""
-    }
-  },
-  {
-    id: "swamp-white-oak",
-    commonName: "Swamp White Oak",
-    scientificName: "Quercus bicolor",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
-    image: {
-      src: "",
+      src: "images/trees/live-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -710,12 +483,10 @@ window.TREES_DATA = [
     id: "water-oak",
     commonName: "Water Oak",
     scientificName: "Quercus nigra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Water Oak here.",
     image: {
-      src: "",
+      src: "images/trees/water-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -724,12 +495,10 @@ window.TREES_DATA = [
     id: "white-oak",
     commonName: "White Oak",
     scientificName: "Quercus alba",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southeastern Canada",
+    description: "PLACEHOLDER — write your quip about the White Oak here.",
     image: {
-      src: "",
+      src: "images/trees/white-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -738,12 +507,10 @@ window.TREES_DATA = [
     id: "willow-oak",
     commonName: "Willow Oak",
     scientificName: "Quercus phellos",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Willow Oak here.",
     image: {
-      src: "",
+      src: "images/trees/willow-oak.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -752,12 +519,10 @@ window.TREES_DATA = [
     id: "persimmon",
     commonName: "Persimmon",
     scientificName: "Diospyros virginiana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern and central U.S.",
+    description: "PLACEHOLDER — write your quip about the Persimmon here.",
     image: {
-      src: "",
+      src: "images/trees/persimmon.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -766,12 +531,10 @@ window.TREES_DATA = [
     id: "loblolly-pine",
     commonName: "Loblolly Pine",
     scientificName: "Pinus taeda",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Loblolly Pine here.",
     image: {
-      src: "",
+      src: "images/trees/loblolly-pine.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -780,12 +543,10 @@ window.TREES_DATA = [
     id: "shortleaf-pine",
     commonName: "Shortleaf Pine",
     scientificName: "Pinus echinata",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern and south-central U.S.",
+    description: "PLACEHOLDER — write your quip about the Shortleaf Pine here.",
     image: {
-      src: "",
+      src: "images/trees/shortleaf-pine.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -794,12 +555,10 @@ window.TREES_DATA = [
     id: "virginia-pine",
     commonName: "Virginia Pine",
     scientificName: "Pinus virginiana",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Mid-Atlantic and southern Appalachian U.S.",
+    description: "PLACEHOLDER — write your quip about the Virginia Pine here.",
     image: {
-      src: "",
+      src: "images/trees/virginia-pine.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -808,12 +567,10 @@ window.TREES_DATA = [
     id: "eastern-white-pine",
     commonName: "Eastern White Pine",
     scientificName: "Pinus strobus",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Northeastern U.S. and southeastern Canada, south through the Appalachians",
+    description: "PLACEHOLDER — write your quip about the Eastern White Pine here.",
     image: {
-      src: "",
+      src: "images/trees/eastern-white-pine.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -822,12 +579,10 @@ window.TREES_DATA = [
     id: "red-mulberry",
     commonName: "Red Mulberry",
     scientificName: "Morus rubra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Red Mulberry here.",
     image: {
-      src: "",
+      src: "images/trees/red-mulberry.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -836,12 +591,10 @@ window.TREES_DATA = [
     id: "river-birch",
     commonName: "River Birch",
     scientificName: "Betula nigra",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S.",
+    description: "PLACEHOLDER — write your quip about the River Birch here.",
     image: {
-      src: "",
+      src: "images/trees/river-birch.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -850,12 +603,10 @@ window.TREES_DATA = [
     id: "sassafras",
     commonName: "Sassafras",
     scientificName: "Sassafras albidum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Sassafras here.",
     image: {
-      src: "",
+      src: "images/trees/sassafras.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -864,12 +615,10 @@ window.TREES_DATA = [
     id: "sourwood",
     commonName: "Sourwood",
     scientificName: "Oxydendrum arboreum",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S., centered on the Appalachians",
+    description: "PLACEHOLDER — write your quip about the Sourwood here.",
     image: {
-      src: "",
+      src: "images/trees/sourwood.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -878,12 +627,10 @@ window.TREES_DATA = [
     id: "sweetgum",
     commonName: "Sweetgum",
     scientificName: "Liquidambar styraciflua",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Southeastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Sweetgum here.",
     image: {
-      src: "",
+      src: "images/trees/sweetgum.jpg",
       credit: "",
       sourceUrl: ""
     }
@@ -892,26 +639,22 @@ window.TREES_DATA = [
     id: "sycamore",
     commonName: "Sycamore",
     scientificName: "Platanus occidentalis",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern and central U.S. and southern Ontario",
+    description: "PLACEHOLDER — write your quip about the Sycamore here.",
     image: {
-      src: "",
+      src: "images/trees/sycamore.jpg",
       credit: "",
       sourceUrl: ""
     }
   },
   {
-    id: "yellow-poplar",
-    commonName: "Yellow-Poplar",
+    id: "tulip-poplar",
+    commonName: "Tulip-Poplar",
     scientificName: "Liriodendron tulipifera",
-    range: "",
-    ecoregion: [],
-    description: "",
-    funFacts: [],
+    range: "Eastern U.S.",
+    description: "PLACEHOLDER — write your quip about the Tulip-Poplar here.",
     image: {
-      src: "",
+      src: "images/trees/tulip-poplar.jpg",
       credit: "",
       sourceUrl: ""
     }

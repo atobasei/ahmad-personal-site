@@ -198,47 +198,28 @@
     }
   }
 
-  // v1 shows the first fun fact only — no rotator, no carousel.
-  function getFirstFunFact(tree) {
-    if (!tree) {
-      return "";
-    }
-    if (!Array.isArray(tree.funFacts)) {
-      return "";
-    }
-
-    var index;
-    var fact;
-
-    for (index = 0; index < tree.funFacts.length; index++) {
-      fact = tree.funFacts[index];
-      if (typeof fact === "string" && fact.trim() !== "") {
-        return fact.trim();
-      }
-    }
-
-    return "";
-  }
-
+  // Reads in this order: what it's called, then where it grows, then what
+  // Ahmad has to say about it. The photo sits alongside the whole stack.
   function renderTree(container, tree) {
     var copy = makeElement("div", "well-copy");
     var heading = makeElement("h2", "feature-name", tree.commonName);
-    var funFact = getFirstFunFact(tree);
-    var factBlock;
 
     heading.id = HEADING_ID;
 
     copy.appendChild(makeElement("p", "feature-label", "Tree of the day"));
     copy.appendChild(heading);
     copy.appendChild(makeElement("p", "tree-sci", tree.scientificName));
-    appendDescription(copy, tree.description);
 
-    if (funFact !== "") {
-      factBlock = makeElement("div", "tree-fact");
-      factBlock.appendChild(makeElement("p", "tree-fact__label", "Fun fact"));
-      factBlock.appendChild(makeElement("p", "tree-fact__text", funFact));
-      copy.appendChild(factBlock);
+    // Every entry has a range, but guard anyway so a hand-edited entry with
+    // the field cleared renders without an empty line.
+    if (typeof tree.range === "string" && tree.range.trim() !== "") {
+      copy.appendChild(makeElement("p", "tree-range", tree.range.trim()));
     }
+
+    // The quip. There is no separate fun-fact field any more — a blank line
+    // in `description` starts a new paragraph, which is how the beech entry
+    // keeps its second thought as its own paragraph.
+    appendDescription(copy, tree.description);
 
     container.appendChild(makeFigure(tree));
     container.appendChild(copy);
