@@ -106,6 +106,27 @@
       </ul>
     </section>
 
+    <!-- ==========================================================================
+         CONTACT
+         The email address is deliberately NOT written out here. Spam harvesters
+         scrape raw HTML with a regex for the usual address shape — whether the
+         match sits in a link href or in plain text makes no difference to them,
+         so writing it out either way would offer no protection at all.
+
+         Instead the two halves ride in data- attributes and script.js joins
+         them on load into a real clickable link. A regex over this source
+         finds no address, because there isn't one — not even in this comment.
+
+         The visible text below is the no-JS fallback: still perfectly readable
+         to a person, still awkward for a scraper. Do not "tidy" it into a
+         normal address — that would undo the whole point.
+         ========================================================================== -->
+    <section class="block">
+      <h2 class="section-label">Contact</h2>
+      <p class="contact-line">Best way to reach me is email — say hello.</p>
+      <a class="contact-email" data-u="ahmadtobasei123" data-d="gmail.com">ahmadtobasei123 [at] gmail [dot] com</a>
+    </section>
+
   </main>
 </div>
 

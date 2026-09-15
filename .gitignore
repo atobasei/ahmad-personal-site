@@ -7,5 +7,8 @@
 # Back them up somewhere real (not just here) if they matter to you.
 images/trees/_originals/
 
+# Fixtures the tests generate at run time — regenerated on every run.
+tests/fixtures-*.js
+
 # macOS
 .DS_Store

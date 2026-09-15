@@ -19,8 +19,10 @@ window.PROJECTS_DATA = [
   {
     id: "network-compliance-manager",
     title: "Automated Network Compliance Manager",
-    // TODO (Ahmad): confirm the repo URL — see the placeholder text below.
-    description: "PLACEHOLDER — I could not fetch a description for this repo (the page returned a 404 when I tried, so it may be private, renamed, or removed). Ahmad: please confirm the URL and I'll fill this in.",
+    // NOTE: this repo is PRIVATE — the URL below 404s for anyone who isn't a
+    // collaborator, which is everyone visiting the site. Either make the repo
+    // public or drop the link; see the note in the description.
+    description: "A tool for auditing network switch configurations against a security baseline. It connects to Aruba AOS-CX switches over SSH, runs a rule book of policy checks — SSH enabled and Telnet disabled, NTP configured, no SNMPv1/v2c community strings, BPDU guard on access ports, unused interfaces shut down — and reports what drifted, either on demand or on a schedule. Built as a six-person team project; I worked on the web dashboard, mainly the dashboard and violations pages.",
     repoUrl: "https://github.com/jzhou17/Automated-Network-Compliance-Manager"
   },
   {

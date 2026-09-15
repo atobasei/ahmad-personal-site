@@ -11,6 +11,7 @@
      5.  Page shell + typography
      6.  THE WELL — the recessed centrepiece + tree-of-the-day module
      7.  Link rows (home page "Pages" list)
+     7b. Contact (home page email)
      8.  Social pills
      9.  Row lists — trail rows + project rows
      10. Trail review — a single hike's page
@@ -368,6 +369,30 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 .rows a:hover,.rows a:focus-visible{border-bottom-color:var(--color-accent)}
 .rows a:hover .t,.rows a:focus-visible .t{
   color:var(--color-accent);transform:translateX(.5rem);
+}
+
+
+/* ==========================================================================
+   7b. CONTACT
+   The address itself is assembled by script.js — see the comment above the
+   contact block in index.html before changing the markup.
+   ========================================================================== */
+.contact-line{
+  color:var(--color-ink-muted);font-size:var(--text-sm);
+  margin-bottom:var(--space-2);
+}
+.contact-email{
+  display:inline-block;
+  font-family:var(--font-display);font-size:var(--text-row);
+  color:var(--color-ink);text-decoration:none;
+  padding-bottom:2px;
+  border-bottom:1px solid var(--color-line-strong);
+  transition:color var(--ease),border-color var(--ease);
+  /* long addresses shouldn't blow out the layout on a narrow screen */
+  max-width:100%;overflow-wrap:anywhere;
+}
+.contact-email:hover,.contact-email:focus-visible{
+  color:var(--color-accent);border-bottom-color:var(--color-accent);
 }
 
 
