@@ -246,7 +246,7 @@ window.TREES_DATA = [
     range: "Eastern U.S. and southern Ontario",
     description: "PLACEHOLDER — write your quip about the Flowering Dogwood here.",
     image: {
-      src: "",
+      src: "images/trees/flowering-dogwood.jpg",
       credit: "",
       sourceUrl: ""
     }

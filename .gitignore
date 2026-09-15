@@ -1,0 +1,11 @@
+# Untouched originals of the tree photos, kept locally as a safety net.
+#
+# The files in images/trees/ are converted to real JPEG at 1200px for the web
+# — that conversion is lossy and irreversible, so the originals live here.
+# They are deliberately NOT committed: keeping them would put the full-size
+# copies in git history permanently, which is exactly what downsizing avoids.
+# Back them up somewhere real (not just here) if they matter to you.
+images/trees/_originals/
+
+# macOS
+.DS_Store
