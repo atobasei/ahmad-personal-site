@@ -19,11 +19,12 @@ window.PROJECTS_DATA = [
   {
     id: "network-compliance-manager",
     title: "Automated Network Compliance Manager",
-    // NOTE: this repo is PRIVATE — the URL below 404s for anyone who isn't a
-    // collaborator, which is everyone visiting the site. Either make the repo
-    // public or drop the link; see the note in the description.
     description: "A tool for auditing network switch configurations against a security baseline. It connects to Aruba AOS-CX switches over SSH, runs a rule book of policy checks — SSH enabled and Telnet disabled, NTP configured, no SNMPv1/v2c community strings, BPDU guard on access ports, unused interfaces shut down — and reports what drifted, either on demand or on a schedule. Built as a six-person team project; I worked on the web dashboard, mainly the dashboard and violations pages.",
-    repoUrl: "https://github.com/jzhou17/Automated-Network-Compliance-Manager"
+    repoUrl: "https://github.com/jzhou17/Automated-Network-Compliance-Manager",
+    // The repo is private, so that URL 404s for every visitor. The row renders
+    // unlinked instead of sending people to a GitHub error page. The URL stays
+    // here for reference — delete this line if the repo is ever made public.
+    private: true
   },
   {
     id: "2048-undo-dimensions",

@@ -366,6 +366,16 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   transition:transform var(--ease),color var(--ease);
 }
 .rows .d{color:var(--color-ink-muted);font-size:var(--text-sm);text-align:right}
+/* A row for a page that doesn't exist yet — same shape as a link row, but
+   inert and dimmed, so it reads as planned rather than broken. */
+.rows .row-soon{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--space-5);
+  padding:1.05rem var(--space-1);
+  color:var(--color-ink);
+  border-bottom:1px solid var(--color-line);
+  opacity:.55;cursor:default;
+}
 .rows a:hover,.rows a:focus-visible{border-bottom-color:var(--color-accent)}
 .rows a:hover .t,.rows a:focus-visible .t{
   color:var(--color-accent);transform:translateX(.5rem);
@@ -520,6 +530,20 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 .project-row-desc{
   margin-top:var(--space-2);max-width:72ch;
   color:var(--color-ink-muted);font-size:var(--text-sm);
+}
+
+/* A project whose repo a visitor can't open (private). Same shape, but inert:
+   no hover, no arrow, and a quiet note saying why there's nothing to click. */
+.project-row--nolink{cursor:default}
+.project-row--nolink:hover{
+  background:transparent;border-color:var(--color-line);transform:none;
+}
+.project-row--nolink .project-row-title::after{content:none}
+.project-row-note{
+  margin-top:var(--space-2);
+  font-size:.72rem;font-weight:600;
+  letter-spacing:var(--tracking-label);text-transform:uppercase;
+  color:var(--color-label);
 }
 
 

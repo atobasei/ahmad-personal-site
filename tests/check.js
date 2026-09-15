@@ -76,7 +76,11 @@ ok.push(["plain tags stay plain", html.includes('class="tag">views')]);
 ok.push(["date formatted (no TZ off-by-one)", html.includes("May 14, 2023")]);
 ok.push(["notes NOT rendered on index", !html.includes("freshman year")]);
 ok.push(["project rows = 4", prows.length===4]);
-ok.push(["project rows open new tab", prows.every(r=>r.target==="_blank"&&r.rel==="noopener")]);
+// A project whose repo a visitor cannot open (private) renders unlinked on
+// purpose — sending someone to a GitHub 404 is worse than offering no link.
+ok.push(["linked project rows open in a new tab", prows.filter(r=>r.tag==="a").every(r=>r.target==="_blank"&&r.rel==="noopener")]);
+ok.push(["private project renders unlinked, with a note", prows.some(r=>r.tag!=="a"&&r.innerHTML.includes("Private repository"))]);
+ok.push(["no project row links nowhere", !prows.some(r=>r.href==="#")]);
 ok.push(["apostrophe escaped in desc", prows[3].innerHTML.includes("user&#39;s age")]);
 ok.push(["sorts newest first", sorted.join()==="Newest,Middle,Oldest"]);
 ok.push(["entry with notes+additionalImages renders", sorted.includes("Newest")]);

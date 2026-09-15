@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!-- Same hemlock frond used as the tree-of-the-day photo placeholder in
+       index.html. Kept as SVG so there is no asset pipeline to maintain and it
+       stays crisp at every size. Colours are the site's ink and ground. -->
+  <rect width="120" height="120" rx="24" fill="#e9ecea"/>
+  <g stroke="#2c4436" stroke-linecap="round" fill="none" transform="translate(0,4) scale(0.94) translate(4,0)">
+    <path d="M60 110 C58 80 58 44 60 14" stroke-width="4"/>
+    <g stroke-width="2.6" opacity=".92">
+      <path d="M59 96 C46 92 38 86 30 78"/><path d="M61 96 C74 92 82 86 90 78"/>
+      <path d="M59 84 C47 81 40 75 33 68"/><path d="M61 84 C73 81 80 75 87 68"/>
+      <path d="M59 72 C49 69 43 64 37 58"/><path d="M61 72 C71 69 77 64 83 58"/>
+      <path d="M59 60 C50 58 45 53 40 48"/><path d="M61 60 C70 58 75 53 80 48"/>
+      <path d="M59 48 C52 46 48 42 44 38"/><path d="M61 48 C68 46 72 42 76 38"/>
+      <path d="M59 37 C54 35 51 32 48 29"/><path d="M61 37 C66 35 69 32 72 29"/>
+    </g>
+  </g>
+</svg>

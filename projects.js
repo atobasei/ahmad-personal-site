@@ -25,17 +25,39 @@
     });
   }
 
+  // A row links to the repo only when there's a repo a visitor can actually
+  // open. A private repo would send them to a GitHub 404, which is worse than
+  // no link at all — those render as plain markup with a small note instead.
+  function isLinkable(project) {
+    if (project.private === true) {
+      return false;
+    }
+    if (!project.repoUrl) {
+      return false;
+    }
+    return true;
+  }
+
   function renderRow(project) {
-    // Whole row is the link. External target, so noopener is required.
-    const row = document.createElement("a");
-    row.className = "project-row";
-    row.href = project.repoUrl || "#";
-    row.target = "_blank";
-    row.rel = "noopener";
+    const linkable = isLinkable(project);
+    let row;
+
+    if (linkable) {
+      // Whole row is the link. External target, so noopener is required.
+      row = document.createElement("a");
+      row.href = project.repoUrl;
+      row.target = "_blank";
+      row.rel = "noopener";
+      row.className = "project-row";
+    } else {
+      row = document.createElement("article");
+      row.className = "project-row project-row--nolink";
+    }
 
     row.innerHTML =
       '<h2 class="project-row-title">' + escapeHtml(project.title) + "</h2>" +
-      '<p class="project-row-desc">' + escapeHtml(project.description) + "</p>";
+      '<p class="project-row-desc">' + escapeHtml(project.description) + "</p>" +
+      (linkable ? "" : '<p class="project-row-note">Private repository</p>');
 
     return row;
   }

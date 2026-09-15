@@ -184,19 +184,32 @@ derive from the data rather than loosening the assertion.
 
 ---
 
+## Deployment
+
+**The site is live on GitHub Pages:**
+<https://atobasei.github.io/ahmad-personal-site/> — served from `main`, no
+build step, no CI. Pushing to `main` deploys.
+
+That means anything committed is public within a minute or two. The absolute
+URLs in each page's `og:` tags are hardcoded to that base — **update them if
+the site ever moves to a custom domain**, or link previews will point at the
+old host.
+
 ## Known issues
 
-- **The Automated Network Compliance Manager repo is private.** Its link on
-  `projects.html` 404s for every visitor, and every project row is a whole-row
-  link. Unresolved — options are to make the upstream public, or to support
-  unlinked rows in `projects.js` (it currently always renders an anchor and
-  falls back to a dead `href="#"`).
-- **51 tree quips are placeholders.** The site would display them if published
-  as-is.
+- **51 tree quips are placeholders**, and they are live on the public site.
 - **`images/trails/mount-leconte-via-alum-cave-trail/` is empty** — the Mount
   LeConte entry points at `preview.jpg`, which doesn't exist yet, so that row
   shows alt text on an empty background.
-- **The Reading link on the home page goes nowhere** (`href="#"`).
+- **Reading has no page yet.** Its home-page row renders as an inert `.row-soon`
+  span rather than a link; swap it back to an anchor when the page exists.
+- **The Automated Network Compliance Manager repo is private.** The entry
+  carries `private: true`, so `projects.js` renders that row unlinked with a
+  "Private repository" note instead of sending visitors to a GitHub 404. Delete
+  that flag if the upstream is ever made public.
+- **`.git` is ~36 MB** against a 5.6 MB working tree — superseded full-size
+  image blobs from before the conversion. Not worth rewriting history after a
+  push; just size images before their first commit.
 
 ---
 
