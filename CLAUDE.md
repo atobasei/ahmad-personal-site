@@ -151,15 +151,16 @@ Ahmad prefers explicit over clever:
 `projects.js` predate the preference and use template literals with an
 `escapeHtml` helper — fine as-is, but new code follows the newer style.
 
-### The contact email is assembled in JS on purpose
+### The contact email is a plain `mailto:` link — deliberately
 
-`index.html` carries the address split across `data-u` / `data-d`; `script.js`
-joins it. The full address must **never** appear in the HTML source — that's
-the entire point. Don't "tidy" the `[at]`/`[dot]` fallback text into a normal
-address, and don't add a plain `mailto:`.
+It was briefly assembled in JS from `data-` attributes to keep the address out
+of the page source. That was removed: it only defeated naive regex harvesters,
+and the `[at]`/`[dot]` fallback showed whenever the script hadn't loaded (a
+stale cache was enough), which read as a rendering bug.
 
-(For the record: plain text offers no protection over a `mailto:` link.
-Harvesters regex the raw HTML and don't care which it is.)
+Don't reintroduce the obfuscation without asking. Note that plain text and a
+`mailto:` link are equally scrapeable — harvesters regex the raw HTML and don't
+care which it is — so there's no point "protecting" it by unlinking it either.
 
 ---
 
