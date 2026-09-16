@@ -44,7 +44,7 @@ trees.js            picks + renders the day's tree
 trails.js           renders the hike rows
 trail-review.js     reads ?id= and renders one hike
 projects.js         renders the project rows
-script.js           home-page odds and ends (currently: email assembly)
+script.js           home-page odds and ends (currently empty)
 style.css           one stylesheet, sectioned and numbered
 
 images/trees/<id>.jpg              one photo per species, flat
@@ -91,17 +91,11 @@ Rotation is derived from the local calendar date — same tree all day for a
 given viewer, cycling through all 52 before repeating, and DST-safe. It is
 not random; do not make it random.
 
-### The tree quips are Ahmad's to write
+### The tree quips are Ahmad’s to write
 
-51 of 52 entries currently hold `PLACEHOLDER — write your quip about the X
-here.` **Never write these for him.** They exist so the rotation runs during
-development. Count what's left:
-
-```
-grep -c PLACEHOLDER trees-data.js
-```
-
-Only `american-beech` has real writing. Same rule for trail `notes`.
+Every `description` in `trees-data.js` is Ahmad’s own writing. **Never write or
+rewrite these for him** — at most paste in text he supplies, fixing only obvious
+typos. Same rule for trail `notes`.
 
 ### The Trail Journal is a journal, not a trail guide
 
@@ -169,13 +163,13 @@ care which it is — so there's no point "protecting" it by unlinking it either.
 Plain node, no dependencies, run from the repo root:
 
 ```
-node tests/check.js          # trail + project rows            13 assertions
+node tests/check.js          # trail + project rows            15 assertions
 node tests/tree-check.js     # rotation, determinism, DST      12
 node tests/render-check.js   # tree module rendering           19
 node tests/review-check.js   # hike page rendering             20
 ```
 
-64 total. They run the real render code against a small DOM stub. **Run them
+66 total. They run the real render code against a small DOM stub. **Run them
 after any change to a data file or renderer** — they have caught the date
 off-by-one and several stale assumptions after schema changes.
 
@@ -198,7 +192,6 @@ old host.
 
 ## Known issues
 
-- **51 tree quips are placeholders**, and they are live on the public site.
 - **`images/trails/mount-leconte-via-alum-cave-trail/` is empty** — the Mount
   LeConte entry points at `preview.jpg`, which doesn't exist yet, so that row
   shows alt text on an empty background.

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Tobasei — Concept 04: Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* CONCEPT 04 — DASHBOARD
+   A dark control-room for one person. A bento of unequal tiles: the tree
+   takes the biggest cell, the hike log is a list, projects a ledger, socials
+   a strip. Tiles tilt toward the cursor. Monospace appears only where there
+   is data — dates, counts, the clock. */
+:root{
+  --bg:#0e1113; --tile:#161b1e; --tile-2:#1c2327; --edge:rgba(255,255,255,.07); --edge-hi:rgba(255,255,255,.16);
+  --fg:#e8ecec; --muted:#97a3a3; --moss:#b5e26a; --moss-dim:#8fb352;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:400 .97rem/1.6 var(--sans);padding:clamp(.9rem,2.5vw,1.6rem);min-height:100vh;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(60% 40% at 20% 0%,rgba(181,226,106,.06),transparent 60%),radial-gradient(40% 40% at 100% 100%,rgba(90,140,200,.05),transparent 60%)}
+::selection{background:var(--moss);color:#0e1113}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--moss);outline-offset:3px;border-radius:6px}
+::-webkit-scrollbar{width:10px}::-webkit-scrollbar-thumb{background:#2a3236;border-radius:5px}
+
+.top{max-width:1280px;margin:0 auto 1rem;display:flex;align-items:center;gap:1.2rem;padding:.3rem .2rem}
+.top .id{display:flex;align-items:center;gap:.7rem;font-weight:600}
+.top .id i{width:10px;height:10px;border-radius:50%;background:var(--moss);box-shadow:0 0 0 4px rgba(181,226,106,.15)}
+.top nav{display:flex;gap:.2rem;margin-left:auto}
+.top nav a{padding:.45rem .8rem;border-radius:8px;color:var(--muted);font-size:.9rem;transition:background .18s,color .18s}
+.top nav a:hover{background:var(--tile);color:var(--fg)}
+.top nav a[aria-current]{color:var(--fg);background:var(--tile-2)}
+.clock{font:500 .82rem/1 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+
+.grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(110px,auto);gap:.8rem}
+.tile{position:relative;background:var(--tile);border:1px solid var(--edge);border-radius:16px;padding:1.2rem 1.3rem;transform-style:preserve-3d;transition:transform .12s ease-out,border-color .2s,background .2s;will-change:transform}
+.tile:hover{border-color:var(--edge-hi)}
+.tile h2{font:600 .74rem/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:.6rem}
+.tile h2 span{font:500 .72rem/1 var(--mono);letter-spacing:0;text-transform:none}
+
+.hello{grid-column:span 5;grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end}
+.hello h1{font-weight:700;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.02;letter-spacing:-.03em;text-wrap:balance}
+.hello h1 em{font-style:normal;color:var(--moss)}
+.hello p{margin-top:.9rem;color:var(--muted);max-width:44ch}
+.hello .cta{margin-top:1.2rem;display:inline-flex;align-items:center;gap:.6rem;font-weight:600;color:var(--moss)}
+.hello .cta svg{width:16px;height:16px;transition:transform .2s}.hello .cta:hover svg{transform:translateX(4px)}
+
+.tree{grid-column:span 7;grid-row:span 3;padding:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,45%) 1fr}
+.tree figure{position:relative;height:100%;min-height:320px}
+.tree img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tree figure::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 70%,var(--tile))}
+.tree .body{padding:1.2rem 1.4rem 1.4rem;display:flex;flex-direction:column}
+.tree h3{font-weight:700;font-size:clamp(1.5rem,2.6vw,2rem);letter-spacing:-.02em;margin-top:.9rem;line-height:1.1}
+.tree .sci{color:var(--muted);font-style:italic}
+.tree p.q{margin-top:.8rem;color:#c9d1d1;font-size:.94rem}
+.tree .meta{margin-top:auto;padding-top:1rem;display:flex;gap:1.6rem;font:400 .78rem/1.4 var(--mono);color:var(--muted)}
+.tree .meta b{display:block;color:var(--fg);font-weight:500}
+
+.log{grid-column:span 5;grid-row:span 2}
+.log ul{list-style:none;margin-top:.7rem}
+.log li{display:grid;grid-template-columns:1fr auto;gap:.6rem;padding:.55rem 0;border-top:1px solid var(--edge);font-size:.92rem}
+.log li a{transition:color .15s}.log li a:hover{color:var(--moss)}
+.log li small{color:var(--muted);display:block;font-size:.8rem}
+.log time{font:400 .78rem/1.5 var(--mono);color:var(--muted)}
+.log .all{margin-top:.6rem;display:inline-block;font-size:.85rem;color:var(--moss)}
+
+.proj{grid-column:span 4;grid-row:span 2}
+.proj ul{list-style:none;margin-top:.7rem}
+.proj li{padding:.5rem 0;border-top:1px solid var(--edge);display:flex;justify-content:space-between;gap:.6rem;align-items:baseline;font-size:.92rem}
+.proj li i{font:400 .72rem/1 var(--mono);color:var(--moss-dim);font-style:normal}
+.proj li a:hover{color:var(--moss)}
+
+.write{grid-column:span 4;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,var(--tile-2),var(--tile))}
+.write p{margin-top:.6rem;font-size:1.05rem;font-weight:600;letter-spacing:-.01em}
+.write a{color:var(--moss);font-size:.85rem}
+
+.social{grid-column:span 4;display:flex;flex-direction:column}
+.social ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.7rem}
+.social a{display:flex;align-items:center;gap:.5rem;padding:.55rem .7rem;border-radius:10px;background:var(--bg);border:1px solid var(--edge);font-size:.88rem;transition:border-color .18s,color .18s}
+.social a:hover{border-color:var(--moss);color:var(--moss)}
+.social svg{width:15px;height:15px;fill:currentColor}
+
+.mail{grid-column:span 4;display:flex;flex-direction:column;justify-content:space-between}
+.mail a{font:500 .95rem/1.3 var(--mono);color:var(--moss);margin-top:.6rem;word-break:break-all}
+.mail p{color:var(--muted);font-size:.9rem;margin-top:.4rem}
+
+.status{grid-column:span 12;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font:400 .78rem/1.5 var(--mono);color:var(--muted);padding:.8rem 1.3rem;border-radius:12px;background:transparent;border:1px dashed var(--edge)}
+
+@media (max-width:980px){
+  .hello,.tree,.log,.proj,.write,.social,.mail{grid-column:span 12}.tree{grid-template-columns:1fr}.tree figure{min-height:220px;height:220px}.tree figure::after{background:linear-gradient(180deg,transparent 60%,var(--tile))}
+  .proj,.write,.social,.mail{grid-column:span 6}
+}
+@media (max-width:560px){.proj,.write,.social,.mail{grid-column:span 12}.top nav{display:none}}
+@media (prefers-reduced-motion:reduce){.tile{transition:none!important;transform:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="id"><i aria-hidden="true"></i>Ahmad Tobasei</div>
+  <span class="clock" id="clock">--:--:--</span>
+  <nav aria-label="Main"><a href="#" aria-current="page">Home</a><a href="../trails.html">Trail Journal</a><a href="../projects.html">Projects</a><a href="#">Writing</a></nav>
+</header>
+
+<main class="grid">
+  <section class="tile hello">
+    <h1>Software by weekday.<br><em>Elevation</em> by weekend.</h1>
+    <p>I'm Ahmad — a CS grad in Knoxville. This is my space to show a little bit about me, the things I enjoy, and the projects I work on.</p>
+    <a class="cta" href="mailto:ahmadtobasei123@gmail.com">Say hello <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </section>
+
+  <section class="tile tree" aria-labelledby="totd">
+    <figure><img src="../images/trees/american-beech.jpg" alt="Smooth gray trunk of an American Beech" width="597" height="900"></figure>
+    <div class="body">
+      <h2 id="totd">Tree of the day <span id="today"></span></h2>
+      <h3>American Beech</h3>
+      <p class="sci">Fagus grandifolia</p>
+      <p class="q">Easy to recognize even from a distance — smooth, pale gray bark that stays smooth for the tree's whole life, unlike almost every other hardwood. Beeches hold onto their dried, papery leaves through much of winter, so a beech grove in January still looks half-dressed.</p>
+      <p class="q">That smooth bark is also why beech trees are the most carved-on trees in America — old initials can stay legible for decades.</p>
+      <div class="meta"><div>range<b>Eastern U.S. &amp; SE Canada</b></div><div>rotation<b>1 of 52 · daily</b></div></div>
+    </div>
+  </section>
+
+  <section class="tile log">
+    <h2>Trail Journal <span>latest</span></h2>
+    <ul>
+      <li><a href="../trail-review.html?id=mount-leconte-via-alum-cave-trail">Mount LeConte via Alum Cave<small>Great Smoky Mountains NP</small></a><time>2023-05-14</time></li>
+      <li><a href="#">Lorem Ridge Loop<small>Cherokee National Forest</small></a><time>2023-04-02</time></li>
+      <li><a href="#">Ipsum Falls out-and-back<small>Big South Fork</small></a><time>2023-03-19</time></li>
+    </ul>
+    <a class="all" href="../trails.html">All hikes →</a>
+  </section>
+
+  <section class="tile proj">
+    <h2>Projects <span>github</span></h2>
+    <ul>
+      <li><a href="../projects.html">Tennessee Through Trees</a><i>js</i></li>
+      <li><a href="../projects.html">Network compliance manager</a><i>py</i></li>
+      <li><a href="../projects.html">Lorem CLI</a><i>go</i></li>
+      <li><a href="../projects.html">Ipsum scraper</a><i>py</i></li>
+    </ul>
+  </section>
+
+  <section class="tile write">
+    <h2>Writing <span>substack</span></h2>
+    <p>"Lorem ipsum: on walking uphill for no reason"</p>
+    <a href="#">Read the essays →</a>
+  </section>
+
+  <section class="tile social">
+    <h2>Elsewhere</h2>
+    <ul>
+      <li><a href="https://github.com/atobasei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.19 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.89.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/ahmad-tobasei-6745a3263/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>LinkedIn</a></li>
+      <li><a href="https://www.instagram.com/ahmadtobasei/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.8a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4ZM17.4 6a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg>Instagram</a></li>
+      <li><a href="https://substack.com/@ahmad288961" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v3.2H4V3Zm0 5.4h16V11H4V8.4Zm0 5.4h16v7.2L12 16.4 4 21V13.8Z"/></svg>Substack</a></li>
+    </ul>
+  </section>
+
+  <section class="tile mail">
+    <h2>Contact</h2>
+    <div><a href="mailto:ahmadtobasei123@gmail.com">ahmadtobasei123@gmail.com</a><p>Best way to reach me. Replies within a day or two, unless I'm on a trail.</p></div>
+  </section>
+
+  <div class="status"><span>● online · knoxville, tn</span><span id="uptime">uptime 0s</span><span>no framework · no build step · works from file://</span></div>
+</main>
+
+<script>
+(function () {
+  // Live clock + uptime give the dashboard a pulse without inventing metrics.
+  var clock = document.getElementById('clock'); var up = document.getElementById('uptime'); var t0 = Date.now();
+  function tick() {
+    clock.textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+    var s = Math.floor((Date.now() - t0) / 1000); up.textContent = 'uptime ' + (s >= 60 ? Math.floor(s / 60) + 'm ' + (s % 60) + 's' : s + 's');
+  }
+  tick(); setInterval(tick, 1000);
+  document.getElementById('today').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toLowerCase();
+
+  // Tiles tilt toward the cursor. Cheap 3D, no library.
+  if (window.matchMedia('(hover:hover) and (prefers-reduced-motion:no-preference)').matches) {
+    var tiles = document.querySelectorAll('.tile');
+    for (var i = 0; i < tiles.length; i++) {
+      (function (tile) {
+        tile.addEventListener('mousemove', function (e) {
+          var r = tile.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - .5; var y = (e.clientY - r.top) / r.height - .5;
+          tile.style.transform = 'perspective(900px) rotateX(' + (-y * 4) + 'deg) rotateY(' + (x * 4) + 'deg) translateZ(4px)';
+        });
+        tile.addEventListener('mouseleave', function () { tile.style.transform = ''; });
+      })(tiles[i]);
+    }
+  }
+})();
+</script>
+</body>
+</html>

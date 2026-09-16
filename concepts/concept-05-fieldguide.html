@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Tobasei — Concept 05: Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Karla:wght@400;500;600&family=Caveat:wght@500&display=swap" rel="stylesheet">
+<style>
+/* CONCEPT 05 — FIELD GUIDE
+   A naturalist's notebook. Kraft cover, an olive ink, a rust second colour,
+   and index tabs down the right edge for the subpages. The tree is a
+   specimen plate with a hand-lettered annotation; the bio is the inside
+   cover. Warm, earthy, tactile without faking paper grain. */
+:root{
+  --kraft:#cbb893; --page:#efe6d2; --page-2:#e6dbc2; --ink:#2b2419; --ink-2:#52463a; --olive:#5b6132; --rust:#943f1e; --line:rgba(43,36,25,.2);
+  --serif:'EB Garamond',Garamond,Georgia,serif; --sans:'Karla',system-ui,sans-serif; --hand:'Caveat','Segoe Print','Bradley Hand',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{color-scheme:light}
+body{background:var(--kraft);color:var(--ink);font:400 1.08rem/1.6 var(--serif);min-height:100vh;padding:clamp(1rem,3vw,2.5rem) clamp(1rem,3vw,2.5rem) clamp(1rem,3vw,2.5rem);-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 15% 10%,rgba(255,255,255,.18),transparent 40%),radial-gradient(circle at 85% 90%,rgba(43,36,25,.12),transparent 45%)}
+::selection{background:var(--olive);color:var(--page)}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+
+.book{position:relative;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 64px}
+.pages{background:var(--page);border:1px solid rgba(43,36,25,.25);box-shadow:0 30px 50px -30px rgba(43,36,25,.55),0 2px 0 rgba(255,255,255,.4) inset;display:grid;grid-template-columns:1fr 1fr}
+.pages>*{padding:clamp(1.4rem,4vw,3rem)}
+.left{border-right:1px solid var(--line);background:linear-gradient(90deg,var(--page) 92%,var(--page-2))}
+.right{background:linear-gradient(270deg,var(--page) 92%,var(--page-2))}
+
+.stamp{display:inline-block;font:600 .74rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--rust);border:1.5px solid var(--rust);padding:.4rem .6rem;transform:rotate(-2deg);border-radius:2px}
+h1{font-weight:400;font-size:clamp(2.6rem,6vw,4rem);line-height:1;margin-top:.4rem;letter-spacing:-.01em}
+h1 small{display:block;font-family:var(--hand);font-size:.5em;color:var(--olive);margin-top:.3rem;transform:rotate(-1deg);transform-origin:left}
+.bio{margin-top:1.6rem;max-width:44ch}
+.bio p+p{margin-top:.8rem}
+.bio em{color:var(--rust)}
+.contents{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line)}
+.contents h2{font:600 .7rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.contents ol{list-style:none;margin-top:.6rem;counter-reset:c}
+.contents li{counter-increment:c;display:flex;align-items:baseline;gap:.6rem;padding:.45rem 0}
+.contents li::before{content:counter(c,upper-roman) ".";font:400 .85rem/1 var(--sans);color:var(--ink-2);min-width:1.6rem}
+.contents a{font-size:1.2rem;display:flex;align-items:baseline;flex:1;gap:.5rem}
+.contents a::after{content:"";flex:1;border-bottom:1px dotted var(--line);transform:translateY(-.3em)}
+.contents .pg{font:400 .85rem/1 var(--sans);color:var(--ink-2)}
+.contents a:hover{color:var(--rust)}
+.socials{margin-top:1.4rem;display:flex;flex-wrap:wrap;gap:.4rem .9rem;font:500 .84rem/1 var(--sans)}
+.socials a{display:inline-flex;align-items:center;gap:.35rem;border-bottom:1px solid var(--line);padding-bottom:.15rem;transition:border-color .2s}
+.socials a:hover{border-color:var(--rust);color:var(--rust)}
+.socials svg{width:14px;height:14px;fill:currentColor}
+.contact{margin-top:1rem;font-size:.95rem;color:var(--ink-2)}
+.contact a{color:var(--rust);border-bottom:1px solid currentColor}
+
+/* Specimen plate */
+.plate{position:relative}
+.plate .no{font:500 .74rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between}
+.plate figure{position:relative;margin-top:1rem;background:var(--page-2);padding:.8rem;border:1px solid var(--line);box-shadow:0 8px 16px -12px rgba(43,36,25,.5)}
+.plate img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;filter:sepia(.18) saturate(.9)}
+.plate .tape{position:absolute;width:74px;height:22px;background:rgba(230,215,170,.75);border:1px solid rgba(43,36,25,.15);top:-10px;left:50%;transform:translateX(-50%) rotate(-3deg)}
+.plate .note{position:absolute;right:-8px;bottom:-14px;font:500 1.35rem/1.1 var(--hand);color:var(--olive);transform:rotate(-6deg);background:var(--page);padding:.2rem .5rem;border:1px solid var(--line);box-shadow:0 4px 10px -6px rgba(43,36,25,.5);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.plate figure:hover .note{transform:rotate(-2deg) translateY(-3px)}
+.plate h3{margin-top:1.6rem;font-weight:500;font-size:1.9rem;line-height:1.1}
+.plate .sci{font-style:italic;color:var(--ink-2)}
+.plate dl{margin-top:.8rem;display:grid;grid-template-columns:max-content 1fr;gap:.2rem 1rem;font:400 .86rem/1.5 var(--sans)}
+.plate dt{color:var(--ink-2);text-transform:uppercase;letter-spacing:.08em;font-size:.74rem;padding-top:.2rem}
+.plate p{margin-top:.8rem;font-size:1rem}
+
+/* Index tabs down the right edge */
+.tabs{display:flex;flex-direction:column;gap:.5rem;padding-top:3rem}
+.tabs a{writing-mode:vertical-rl;padding:1rem .55rem;background:var(--page-2);border:1px solid rgba(43,36,25,.3);border-left:0;border-radius:0 8px 8px 0;font:600 .72rem/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s,color .2s;box-shadow:4px 6px 12px -8px rgba(43,36,25,.5)}
+.tabs a:nth-child(1){background:#d9c9a2}.tabs a:nth-child(2){background:#cbd0a7}.tabs a:nth-child(3){background:#e0c3a8}
+.tabs a:hover{transform:translateX(8px);color:var(--ink)}
+.tabs a[aria-current]{background:var(--page);transform:translateX(4px);color:var(--rust)}
+.colophon{max-width:1100px;margin:1rem auto 0;font:400 .76rem/1.4 var(--sans);color:#4c4230;display:flex;justify-content:space-between;letter-spacing:.06em}
+
+@media (max-width:900px){.pages{grid-template-columns:1fr}.left{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:640px){
+  .book{grid-template-columns:1fr}.tabs{flex-direction:row;padding:0 0 .5rem;order:-1}
+  .tabs a{writing-mode:horizontal-tb;border-left:1px solid rgba(43,36,25,.3);border-bottom:0;border-radius:8px 8px 0 0;padding:.6rem .9rem}
+  .tabs a:hover,.tabs a[aria-current]{transform:translateY(-3px)}
+}
+</style>
+</head>
+<body>
+<div class="book">
+  <div class="pages">
+    <section class="left">
+      <h1>Ahmad Tobasei<small>field notes, code &amp; the occasional essay</small></h1>
+      <div class="bio">
+        <p>Hi, I'm Ahmad. This is my space to show a little bit about me, the things I enjoy and the projects I work on. I studied computer science; I write software during the week and spend most weekends somewhere in the <em>Southern Appalachians</em> looking at bark.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non lorem non velit dictum facilisis. Read about the tree of the day, check out my trail journal, or feel free to reach out :)</p>
+      </div>
+      <div class="contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="../trails.html">Trail Journal <span class="pg">notes from hikes worth remembering</span></a></li>
+          <li><a href="../projects.html">Projects <span class="pg">tech, mostly for fun</span></a></li>
+          <li><a href="#">Writing <span class="pg">essays &amp; the occasional rant</span></a></li>
+        </ol>
+      </div>
+      <ul class="socials" style="list-style:none">
+        <li><a href="https://github.com/atobasei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.19 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.89.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/ahmad-tobasei-6745a3263/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/ahmadtobasei/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.8a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4ZM17.4 6a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg>Instagram</a></li>
+        <li><a href="https://substack.com/@ahmad288961" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v3.2H4V3Zm0 5.4h16V11H4V8.4Zm0 5.4h16v7.2L12 16.4 4 21V13.8Z"/></svg>Substack</a></li>
+      </ul>
+      <p class="contact">Letters: <a href="mailto:ahmadtobasei123@gmail.com">ahmadtobasei123@gmail.com</a></p>
+      <p style="margin-top:1.6rem"><span class="stamp">Property of A. Tobasei · if found, please return</span></p>
+    </section>
+
+    <section class="right plate" aria-labelledby="plate-h">
+      <div class="no"><span id="plate-h">Plate of the day</span><span id="date"></span></div>
+      <figure>
+        <span class="tape" aria-hidden="true"></span>
+        <img src="../images/trees/american-beech.jpg" alt="Smooth gray trunk of an American Beech" width="597" height="900">
+        <span class="note" aria-hidden="true">smooth bark, all its life</span>
+      </figure>
+      <h3>American Beech</h3>
+      <p class="sci">Fagus grandifolia</p>
+      <dl><dt>Range</dt><dd>Eastern U.S. and southeastern Canada</dd><dt>Seen</dt><dd>Everywhere in the Smokies below 5,000 ft</dd></dl>
+      <p>Easy to recognize even from a distance — smooth, pale gray bark that stays smooth for the tree's whole life, unlike almost every other hardwood. Beeches hold onto their dried, papery leaves through much of winter, so a beech grove in January still looks half-dressed.</p>
+      <p>That smooth bark is also why beech trees are the most carved-on trees in America — old initials can stay legible for decades.</p>
+    </section>
+  </div>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#" aria-current="page">Home</a>
+    <a href="../trails.html">Trail Journal</a>
+    <a href="../projects.html">Projects</a>
+    <a href="#">Writing</a>
+  </nav>
+</div>
+<p class="colophon"><span>Vol. 1 · Knoxville, Tennessee</span><span>A new plate every day at midnight</span></p>
+<script>
+  document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+</script>
+</body>
+</html>

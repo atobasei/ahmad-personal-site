@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Tobasei — Concept 10: Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* CONCEPT 10 — DESK
+   A playful, tactile desktop. Objects scattered on a warm surface: a
+   polaroid of the tree (rotates on hover, flips on click for the write-up),
+   a folded trail map, a floppy disk for projects, a letter for writing, a
+   business card for the bio, sticky notes for socials. Everything is
+   draggable. The least "website" of the ten, on purpose. */
+:root{
+  --desk:#c9a27a; --desk-2:#b48d63; --paper:#fbf7ee; --ink:#2a2521; --ink-2:#5c534a; --sticky:#fff27a; --sticky-2:#ffc7c7; --sticky-3:#c9f0ff; --sticky-4:#d6f5c6;
+  --serif:'Libre Baskerville',Georgia,serif; --type:'Special Elite','Courier New',monospace; --sans:'Nunito',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{color-scheme:light}
+body{background:var(--desk);color:var(--ink);font:400 1rem/1.5 var(--sans);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.025) 0 2px,transparent 2px 14px),linear-gradient(180deg,rgba(255,255,255,.12),transparent 40%,rgba(0,0,0,.14))}
+::selection{background:var(--ink);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+
+.desk{position:relative;max-width:1200px;height:calc(100vh - 2rem);min-height:720px;margin:1rem auto}
+.obj{position:absolute;touch-action:none;user-select:none;cursor:grab;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;filter:drop-shadow(0 12px 14px rgba(60,30,10,.35))}
+.obj.drag{cursor:grabbing;transition:none;z-index:50!important;filter:drop-shadow(0 26px 24px rgba(60,30,10,.45))}
+.obj a{cursor:pointer}
+
+/* business card */
+.card{left:5%;top:6%;width:min(360px,80vw);background:var(--paper);padding:1.4rem 1.6rem;border-radius:3px;transform:rotate(-3deg);z-index:3}
+.card:hover{transform:rotate(-1.5deg) translateY(-3px)}
+.card h1{font-family:var(--serif);font-weight:700;font-size:1.7rem;letter-spacing:-.01em}
+.card .role{font-family:var(--type);font-size:.85rem;color:var(--ink-2);margin-top:.2rem}
+.card p{font-size:.95rem;margin-top:.9rem;color:var(--ink)}
+.card .mail{display:inline-block;margin-top:.8rem;font-family:var(--type);font-size:.85rem;border-bottom:1px solid var(--ink)}
+.card::after{content:"";position:absolute;right:1rem;bottom:1rem;width:36px;height:36px;border:2px solid var(--ink-2);border-radius:50%;opacity:.25}
+
+/* polaroid: click to flip */
+.pola{left:52%;top:4%;width:min(300px,72vw);perspective:1200px;transform:rotate(4deg);z-index:4}
+.pola:hover{transform:rotate(2deg) translateY(-4px)}
+.pola .inner{position:relative;width:100%;aspect-ratio:300/360;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.pola.flipped .inner{transform:rotateY(180deg)}
+.pola .face{position:absolute;inset:0;backface-visibility:hidden;background:var(--paper);padding:.75rem .75rem 0;border-radius:2px}
+.pola .front img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 35%;display:block;background:#333}
+.pola .front .cap{font-family:var(--type);text-align:center;padding:.9rem .4rem;font-size:.95rem}
+.pola .front .cap small{display:block;font-size:.72rem;color:var(--ink-2);margin-top:.15rem}
+.pola .back{transform:rotateY(180deg);padding:1rem;display:flex;flex-direction:column;font-size:.82rem;line-height:1.45;overflow:auto}
+.pola .back h2{font-family:var(--serif);font-size:1.05rem}
+.pola .back em{color:var(--ink-2);display:block;margin-bottom:.4rem}
+.pola .back p+p{margin-top:.4rem}
+.pola .back .tiny{margin-top:auto;font-family:var(--type);font-size:.74rem;color:var(--ink-2);padding-top:.5rem}
+.pola button{position:absolute;bottom:.5rem;right:.6rem;background:none;border:0;font:600 .7rem var(--sans);color:var(--ink-2);cursor:pointer;text-transform:uppercase;letter-spacing:.08em}
+.pola button:hover{color:var(--ink)}
+
+/* folded map -> trail journal */
+.map{left:8%;top:52%;width:min(280px,70vw);transform:rotate(2deg);z-index:2}
+.map:hover{transform:rotate(0) translateY(-4px)}
+.map a{display:block;background:#e8dfc4;border-radius:3px;padding:.9rem 1rem;position:relative;overflow:hidden}
+.map a::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 33%,rgba(0,0,0,.06) 33% calc(33% + 1px));pointer-events:none}
+.map svg{width:100%;height:110px;display:block}
+.map h2{font-family:var(--serif);font-size:1.25rem;margin-top:.4rem}
+.map p{font-size:.82rem;color:var(--ink-2)}
+
+/* floppy -> projects */
+.floppy{left:44%;top:56%;width:190px;transform:rotate(-6deg);z-index:2}
+.floppy:hover{transform:rotate(-3deg) translateY(-4px)}
+.floppy a{display:block;background:#2f3f6e;border-radius:6px 6px 4px 4px;padding:.6rem;aspect-ratio:1;position:relative;color:var(--paper)}
+.floppy .shutter{height:34%;background:#c9cdd6;border-radius:2px;width:56%;margin:0 auto;position:relative}
+.floppy .shutter::after{content:"";position:absolute;width:22%;height:70%;background:#2f3f6e;left:18%;top:15%}
+.floppy .label{background:var(--paper);color:var(--ink);margin-top:.5rem;padding:.5rem .55rem;height:48%;border-radius:2px;font-family:var(--type);font-size:.78rem;line-height:1.35;background-image:repeating-linear-gradient(180deg,transparent 0 17px,rgba(0,0,0,.1) 17px 18px)}
+.floppy .label b{display:block;font-size:.95rem}
+
+/* letter -> writing */
+.letter{left:68%;top:60%;width:min(260px,66vw);transform:rotate(3deg);z-index:2}
+.letter:hover{transform:rotate(1deg) translateY(-4px)}
+.letter a{display:block;background:var(--paper);padding:1rem 1.1rem 1.2rem;border-radius:2px;font-family:var(--type);font-size:.82rem;line-height:1.5}
+.letter .stamp{float:right;width:38px;height:46px;border:1px dashed var(--ink-2);margin:-.2rem 0 .3rem .5rem;display:grid;place-items:center;font-size:.7rem;text-align:center;color:var(--ink-2)}
+.letter h2{font-family:var(--serif);font-size:1.1rem;margin-top:.6rem}
+.letter .fade{margin-top:.4rem;color:var(--ink-2);mask-image:linear-gradient(180deg,#000 40%,transparent);-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent)}
+
+/* sticky notes -> socials */
+.note{width:120px;aspect-ratio:1;padding:.7rem .6rem;font:700 .9rem/1.2 var(--sans);display:flex;flex-direction:column;justify-content:space-between;z-index:5;border-radius:1px}
+.note:hover{transform:rotate(0) scale(1.05)!important}
+.note a{display:flex;flex-direction:column;justify-content:space-between;height:100%}
+.note svg{width:22px;height:22px;fill:currentColor}
+.note span{font-size:.72rem;font-weight:600;opacity:.75}
+.n1{background:var(--sticky);left:82%;top:8%;transform:rotate(6deg)}
+.n2{background:var(--sticky-2);left:88%;top:30%;transform:rotate(-4deg)}
+.n3{background:var(--sticky-3);left:35%;top:36%;transform:rotate(-8deg)}
+.n4{background:var(--sticky-4);left:78%;top:38%;transform:rotate(9deg)}
+
+/* pencil, a hint */
+.hint{position:absolute;left:5%;bottom:3%;font-family:var(--type);font-size:.8rem;color:#4a3a2a;pointer-events:none}
+.hint b{font-weight:400;text-decoration:underline}
+nav.tray{position:absolute;right:2%;bottom:2%;display:flex;gap:.3rem;background:rgba(43,37,33,.85);padding:.4rem;border-radius:8px;z-index:6}
+nav.tray a{color:var(--paper);font:600 .78rem/1 var(--sans);padding:.5rem .7rem;border-radius:5px}
+nav.tray a:hover,nav.tray a[aria-current]{background:rgba(255,255,255,.15)}
+
+@media (max-width:760px){
+  .desk{height:auto;min-height:0;display:flex;flex-direction:column;gap:1.4rem;padding:1rem;align-items:center}
+  .obj{position:static;width:min(380px,100%)!important;transform:rotate(0)!important}
+  .note{width:100%;aspect-ratio:auto}.note a{flex-direction:row;align-items:center;gap:.6rem}
+  .floppy{width:220px!important}.hint{display:none}nav.tray{position:static;order:-1}
+}
+@media (prefers-reduced-motion:reduce){.obj,.pola .inner{transition:none}}
+</style>
+</head>
+<body>
+<main class="desk" id="desk">
+  <div class="obj card" data-z="3">
+    <h1>Ahmad Tobasei</h1>
+    <div class="role">computer science · software · trails</div>
+    <p>Hi! This is my space to show a little bit about me, the things I enjoy and the projects I work on. Poke around the desk — everything moves :)</p>
+    <a class="mail" href="mailto:ahmadtobasei123@gmail.com">ahmadtobasei123@gmail.com</a>
+  </div>
+
+  <div class="obj pola" id="pola" data-z="4">
+    <div class="inner">
+      <div class="face front">
+        <img src="../images/trees/american-beech.jpg" alt="Smooth gray trunk of an American Beech" width="597" height="900">
+        <div class="cap">American Beech<small id="date">tree of the day</small></div>
+        <button type="button" id="flip" aria-label="Flip the photo to read about this tree">flip ↻</button>
+      </div>
+      <div class="face back">
+        <h2>American Beech</h2>
+        <em>Fagus grandifolia · Eastern U.S. and SE Canada</em>
+        <p>Easy to recognize even from a distance — smooth, pale gray bark that stays smooth for the tree's whole life, unlike almost every other hardwood. Beeches hold their papery leaves through much of winter, so a beech grove in January still looks half-dressed.</p>
+        <p>That smooth bark is also why beech trees are the most carved-on trees in America — old initials can stay legible for decades.</p>
+        <span class="tiny">a new tree every day at midnight</span>
+        <button type="button" id="flip2" aria-label="Flip back to the photo">flip ↻</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="obj map" data-z="2"><a href="../trails.html">
+    <svg viewBox="0 0 260 110" aria-hidden="true"><g fill="none" stroke="#7a6a48" stroke-width="1"><path d="M10 80 C 40 60, 60 90, 90 70 S 140 40, 170 60 S 220 90, 250 70"/><path d="M10 60 C 40 40, 60 70, 90 50 S 140 20, 170 40 S 220 70, 250 50"/><path d="M10 40 C 40 20, 60 50, 90 30 S 140 0, 170 20 S 220 50, 250 30"/></g><path d="M20 95 C 60 80, 90 70, 130 55 S 200 30, 240 15" fill="none" stroke="#c3462b" stroke-width="2" stroke-dasharray="4 4"/><circle cx="240" cy="15" r="4" fill="#c3462b"/></svg>
+    <h2>Trail Journal</h2><p>Notes from hikes worth remembering</p>
+  </a></div>
+
+  <div class="obj floppy" data-z="2"><a href="../projects.html" aria-label="Projects">
+    <div class="shutter"></div>
+    <div class="label"><b>PROJECTS</b>tech, mostly for fun<br>4 repos · 1.44 MB</div>
+  </a></div>
+
+  <div class="obj letter" data-z="2"><a href="#">
+    <span class="stamp">stamp<br>here</span>
+    <div>Dear reader,</div>
+    <h2>Writing</h2>
+    <div class="fade">Essays and the occasional rant. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua…</div>
+  </a></div>
+
+  <div class="obj note n1" data-z="5"><a href="https://github.com/atobasei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.53.12-3.19 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.89.12 3.19.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg><div>GitHub<span> atobasei</span></div></a></div>
+  <div class="obj note n2" data-z="5"><a href="https://www.linkedin.com/in/ahmad-tobasei-6745a3263/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg><div>LinkedIn<span> say hi</span></div></a></div>
+  <div class="obj note n3" data-z="5"><a href="https://www.instagram.com/ahmadtobasei/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.8a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Zm0 2a2.7 2.7 0 1 0 0 5.4 2.7 2.7 0 0 0 0-5.4ZM17.4 6a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></svg><div>Instagram<span> @ahmadtobasei</span></div></a></div>
+  <div class="obj note n4" data-z="5"><a href="https://substack.com/@ahmad288961" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16v3.2H4V3Zm0 5.4h16V11H4V8.4Zm0 5.4h16v7.2L12 16.4 4 21V13.8Z"/></svg><div>Substack<span> essays</span></div></a></div>
+
+  <p class="hint">↖ drag anything · <b>click the photo</b> to flip it</p>
+  <nav class="tray" aria-label="Main"><a href="#" aria-current="page">Home</a><a href="../trails.html">Trail Journal</a><a href="../projects.html">Projects</a><a href="#">Writing</a></nav>
+</main>
+
+<script>
+(function () {
+  document.getElementById('date').textContent = 'tree of the day · ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  // Flip the polaroid.
+  var pola = document.getElementById('pola');
+  function flip(e) { e.preventDefault(); e.stopPropagation(); pola.classList.toggle('flipped'); }
+  document.getElementById('flip').addEventListener('click', flip);
+  document.getElementById('flip2').addEventListener('click', flip);
+
+  // Drag any object. A press-and-release without movement still counts as
+  // a click, so links and the flip button keep working.
+  var mobile = window.matchMedia('(max-width:760px)');
+  var top = 10;
+  var objs = document.querySelectorAll('.obj');
+  for (var i = 0; i < objs.length; i++) {
+    (function (o) {
+      var sx, sy, ox, oy, moved;
+      o.addEventListener('pointerdown', function (e) {
+        if (mobile.matches || e.button !== 0) { return; }
+        sx = e.clientX; sy = e.clientY; ox = o.offsetLeft; oy = o.offsetTop; moved = false;
+        o.style.zIndex = ++top; o.setPointerCapture(e.pointerId);
+        o.addEventListener('pointermove', move);
+        o.addEventListener('pointerup', up); o.addEventListener('pointercancel', up);
+      });
+      function move(e) {
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if (!moved && Math.abs(dx) + Math.abs(dy) < 4) { return; }
+        moved = true; o.classList.add('drag');
+        o.style.left = (ox + dx) + 'px'; o.style.top = (oy + dy) + 'px';
+      }
+      function up(e) {
+        o.classList.remove('drag');
+        o.removeEventListener('pointermove', move); o.removeEventListener('pointerup', up); o.removeEventListener('pointercancel', up);
+        if (moved) { var block = function (ev) { ev.preventDefault(); o.removeEventListener('click', block, true); }; o.addEventListener('click', block, true); setTimeout(function () { o.removeEventListener('click', block, true); }, 0); }
+      }
+      // Clicking the polaroid photo itself flips it too.
+      if (o.id === 'pola') { o.querySelector('img').addEventListener('click', function () { pola.classList.toggle('flipped'); }); }
+    })(objs[i]);
+  }
+})();
+</script>
+</body>
+</html>

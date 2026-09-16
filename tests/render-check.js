@@ -98,10 +98,11 @@ const t = [
  ["D: real data renders a tree (rotation is live)", dOut.includes('class="feature-name"') && !dOut.includes("Coming soon")],
  ["D: that tree's range renders", dOut.includes('class="tree-range"')],
  ["D: that tree's photo renders from images/trees/", dOut.includes('src="images/trees/')],
- ["D: beech's real quip still renders as 2 paragraphs when it is the pick",
-   (() => { const only = clone(); for (const t of only) t.description = ""; 
-            const b = only.find(t => t.id === "american-beech");
-            b.description = base.find(t => t.id === "american-beech").description;
+ // Paragraph splitting, checked with a fixed two-paragraph sample so the test
+ // does not depend on how many paragraphs Ahmad happens to write.
+ ["D: a two-paragraph quip renders as two paragraphs",
+   (() => { const only = clone(); for (const t of only) t.description = "";
+            only.find(t => t.id === "american-beech").description = "First thought.\n\nSecond thought.";
             const o = ser(render(only, new RealDate(2026,8,14)));
             return o.includes("American Beech") && (o.match(/class="feature-note"/g)||[]).length === 2; })()],
  ["B: no fun-fact markup emitted anywhere", !bOut.includes("tree-fact")],
