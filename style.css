@@ -571,16 +571,6 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   color:var(--color-accent);transform:translateX(-.2rem);
 }
 
-/* The page opens on the place, then talks about it. Full width of the
-   reading column, 3:2 — a landscape crop suits a summit shot. */
-.trail-review__lead{
-  margin:0 0 var(--space-6);
-  border-radius:var(--radius-md);overflow:hidden;
-  background:var(--color-sunk);
-  aspect-ratio:3 / 2;
-}
-.trail-review__lead img{width:100%;height:100%;object-fit:cover}
-
 .trail-review__head{margin-bottom:var(--space-6)}
 .trail-review__name{
   font-family:var(--font-display);font-weight:500;
@@ -604,23 +594,29 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
 }
 .trail-review__para + .trail-review__para{margin-top:var(--space-4)}
 
-/* Gallery: full-width photos stacked down the page, so each shot gets room
-   to land rather than being shrunk into a grid. */
+/* Gallery: below the write-up, preview first, in two columns so a hike with
+   a lot of photos doesn't become a wall of full-width images (one column on
+   phones — see RESPONSIVE). Natural aspect ratio, so portraits aren't
+   cropped; rows align to the top, so a landscape beside a portrait just
+   leaves space under the shorter one. */
 .trail-gallery{
   margin-top:var(--space-section);
-  display:flex;flex-direction:column;gap:var(--space-6);
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--space-6) var(--space-5);
+  align-items:start;
 }
-.trail-photo{
-  margin:0;
-  border-radius:var(--radius-md);overflow:hidden;
+.trail-photo{margin:0}
+/* Rounding lives on the image, not the figure, so a caption sits on the
+   page rather than inside a grey rounded box. */
+.trail-photo img{
+  width:100%;height:auto;display:block;
+  border-radius:var(--radius-md);
   background:var(--color-sunk);
 }
-.trail-photo img{width:100%;height:auto;display:block}
 /* Captions are optional per photo — nothing renders when absent. */
 .trail-photo__caption{
-  padding:var(--space-3) var(--space-1) 0;
+  padding:var(--space-2) 0 0;
   color:var(--color-ink-muted);font-size:var(--text-sm);
-  max-width:64ch;
 }
 
 /* not-found state: a mistyped id, or a hike removed from the data file */
@@ -663,6 +659,8 @@ body.page-home .page-head h1{font-size:var(--text-h1-home)}
   .trail-row-image{flex:0 0 auto;width:100%}
   .trail-row-image::before{padding-top:60%}   /* wider crop when full-bleed */
   .trail-row-body{justify-content:flex-start}
+  /* hike page photos: two columns would be thumbnail-sized here */
+  .trail-gallery{grid-template-columns:1fr}
 }
 
 /* Below this the well's two columns get too narrow to be worth keeping side

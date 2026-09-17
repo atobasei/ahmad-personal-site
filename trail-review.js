@@ -14,6 +14,9 @@
    stat is an optional mileage that sits inline with the date. Don't add a
    stats panel; if a hike's elevation gain matters, it belongs in the prose.
 
+   Order on the page: title, meta, tags, then the write-up, then every photo
+   (previewImage first, then additionalImages) stacked below it.
+
    Code style is deliberately explicit — plain for-loops and spelled-out
    if/else rather than chained array methods — matching trees.js.
 
@@ -123,8 +126,8 @@
      PIECES OF THE PAGE
      ------------------------------------------------------------------------ */
 
-  // A full-width photo, optionally with a caption under it. Used for both the
-  // lead photo and each gallery photo.
+  // A full-width photo, optionally with a caption under it. Used for every
+  // photo in the gallery, the preview included.
   function makePhoto(source, altText, caption, className) {
     var figure = makeElement("figure", className);
     var image = document.createElement("img");
@@ -217,13 +220,33 @@
     }
   }
 
-  // Gallery entries may be a plain path string OR { src, caption }, so a photo
-  // can carry a line of writing without captions ever being required.
-  function appendGallery(container, additionalImages, trailName) {
-    if (!Array.isArray(additionalImages)) {
-      return;
+  // Every photo for the page, in display order: the preview first, then the
+  // additionalImages. Either may be missing. The preview is turned into the
+  // same { src, caption } shape a gallery item uses when it has a caption.
+  function collectPhotos(trail) {
+    var photos = [];
+    var index;
+
+    if (isNonEmptyString(trail.previewImage)) {
+      if (isNonEmptyString(trail.previewCaption)) {
+        photos.push({ src: trail.previewImage, caption: trail.previewCaption });
+      } else {
+        photos.push(trail.previewImage);
+      }
     }
 
+    if (Array.isArray(trail.additionalImages)) {
+      for (index = 0; index < trail.additionalImages.length; index++) {
+        photos.push(trail.additionalImages[index]);
+      }
+    }
+
+    return photos;
+  }
+
+  // Gallery entries may be a plain path string OR { src, caption }, so a photo
+  // can carry a line of writing without captions ever being required.
+  function appendGallery(container, photos, trailName) {
     var gallery = makeElement("div", "trail-gallery");
     var index;
     var entry;
@@ -231,8 +254,8 @@
     var caption;
     var added = 0;
 
-    for (index = 0; index < additionalImages.length; index++) {
-      entry = additionalImages[index];
+    for (index = 0; index < photos.length; index++) {
+      entry = photos[index];
       source = "";
       caption = "";
 
@@ -269,13 +292,6 @@
     // This one file serves every hike, so the tab title has to be set here.
     document.title = trail.name + " — Ahmad Tobasei";
 
-    // Lead photo first: the page opens on the place, then talks about it.
-    if (isNonEmptyString(trail.previewImage)) {
-      container.appendChild(
-        makePhoto(trail.previewImage.trim(), trail.name, "", "trail-review__lead")
-      );
-    }
-
     header.appendChild(makeElement("h1", "trail-review__name", trail.name));
     header.appendChild(makeMetaLine(trail));
     if (tags !== null) {
@@ -289,7 +305,8 @@
       appendNotes(container, trail.notes);
     }
 
-    appendGallery(container, trail.additionalImages, trail.name);
+    // Photos sit below the write-up for now, the preview leading them.
+    appendGallery(container, collectPhotos(trail), trail.name);
   }
 
   // Shown when the id is missing or matches nothing — a mistyped URL, or a

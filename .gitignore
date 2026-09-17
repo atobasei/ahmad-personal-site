@@ -7,8 +7,16 @@
 # Back them up somewhere real (not just here) if they matter to you.
 images/trees/_originals/
 
+# Same idea for hike photos: untouched phone originals, one folder per hike
+# id. The resized copies in images/trails/<id>/ are what gets published.
+images/trails/_originals/
+
 # Fixtures the tests generate at run time — regenerated on every run.
 tests/fixtures-*.js
+
+# Design concept mockups — local only, never published. The site deploys
+# straight from main, so anything committed here would be public.
+concepts/
 
 # macOS
 .DS_Store

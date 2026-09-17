@@ -40,13 +40,15 @@ const fs2 = require("fs");
 const tmp = require("path").join(__dirname,"fixtures-trails.js");
 fs2.writeFileSync(tmp, `window.TRAILS_DATA=[
  {id:"old",name:"Oldest",location:"A, TN",dateHiked:"2021-01-02",tags:["x"],previewImage:"a.jpg",reviewUrl:"a.html"},
- {id:"new",name:"Newest",location:"B, TN",dateHiked:"2025-11-30",tags:["gsmnp"],previewImage:"b.jpg",reviewUrl:"b.html",notes:"n",additionalImages:["c.jpg","d.jpg"]},
+ {id:"new",name:"Newest",location:"B, TN",dateHiked:"2025-11-30",tags:["gsmnp"],previewImage:"b.jpg",previewCaption:"PREVIEW-CAPTION-SENTINEL",reviewUrl:"b.html",notes:"n",additionalImages:["c.jpg","d.jpg"]},
  {id:"mid",name:"Middle",location:"C, TN",dateHiked:"2023-06-15",previewImage:"c.jpg",reviewUrl:"c.html"}
 ];`);
 const sorted = run(tmp,"trails.js","trail-grid").map(r=>r.innerHTML.match(/trail-row-name">([^<]+)/)[1]);
 console.log("sorted order:", sorted.join(" -> "));
 const sortedDates = run(tmp,"trails.js","trail-grid").map(r=>r.innerHTML.match(/trail-row-date">([^<]+)/)[1]);
 console.log("dates:", sortedDates.join(" | "));
+// previewCaption belongs to the hike page only — the index row must not show it.
+const fixtureHtml = run(tmp,"trails.js","trail-grid").map(r=>r.innerHTML).join("");
 
 console.log("\n══════ projects.js ══════");
 const prows = run("projects-data.js","projects.js","project-list");
@@ -56,20 +58,40 @@ prows.forEach(r => console.log("  ", r.tag, r.className, "| target:", r.target, 
 console.log("\n══════ assertions ══════");
 const ok = [];
 ok.push(["trail row is an <a>", rows[0].tag==="a"]);
-ok.push(["trail row links to reviewUrl", rows[0].href==="trail-review.html?id=mount-leconte-via-alum-cave-trail"]);
+ok.push(["index row never shows previewCaption", !fixtureHtml.includes("PREVIEW-CAPTION-SENTINEL")]);
+// Derived, not hardcoded: the first row is whichever entry is newest, since
+// trails.js sorts newest first. Adding a more recent hike must not break this.
+{
+  const fsN=require("fs"); const g={}; const prev=global.window; global.window=g;
+  eval(fsN.readFileSync("trails-data.js","utf8"));
+  let newest=g.TRAILS_DATA[0];
+  for(const t of g.TRAILS_DATA){
+    if(new Date(t.dateHiked) > new Date(newest.dateHiked)) newest=t;
+  }
+  global.window=prev;
+  ok.push(["first row is the newest hike, linked to its reviewUrl", rows[0].href===newest.reviewUrl]);
+}
 // Stronger invariant: every reviewUrl must point at the template with an id
 // that actually matches an entry, or the row is a dead link.
 {
   const fs3=require("fs"); const g={}; const prev=global.window; global.window=g;
   eval(fs3.readFileSync("trails-data.js","utf8"));
   const ids=new Set(g.TRAILS_DATA.map(t=>t.id));
-  let allResolve=true;
+  let allResolve=true, ownId=true;
   for(const t of g.TRAILS_DATA){
     const m=/^trail-review\.html\?id=(.+)$/.exec(t.reviewUrl||"");
     if(!m || !ids.has(m[1])) allResolve=false;
+    // A repeat hike copied from an earlier entry must point at ITS OWN id,
+    // not the original's, or its row opens the wrong hike.
+    if(!m || m[1]!==t.id) ownId=false;
   }
   global.window=prev;
   ok.push(["every reviewUrl resolves to a real entry id", allResolve]);
+  ok.push(["every reviewUrl points at its own entry", ownId]);
+  // Repeat hikes of the same trail need distinct ids (date-suffixed). A
+  // duplicate id would make the later hike's page unreachable, since
+  // trail-review.js opens the first match.
+  ok.push(["every trail id is unique", ids.size===g.TRAILS_DATA.length]);
 }
 ok.push(["gsmnp tag gets distinct class", html.includes('class="tag tag--gsmnp"')]);
 ok.push(["plain tags stay plain", html.includes('class="tag">views')]);

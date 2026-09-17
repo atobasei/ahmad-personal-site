@@ -76,7 +76,14 @@ the filename is load-bearing for existing links, the display name is Ahmad's.
 Selected by `?id=<slug>`, matched against `id` in `trails-data.js`. Adding a
 hike means adding a data object — never a new page. `reviewUrl` must always
 look like `trail-review.html?id=<that entry's id>`; `tests/check.js` asserts
-every `reviewUrl` resolves to a real entry.
+every `reviewUrl` points at its own entry and that every `id` is unique.
+
+**Repeat hikes of the same trail are separate entries.** Keep the first hike's
+id unchanged and append the date to later ones
+(`mount-leconte-via-alum-cave-trail-2025-10-04`). Duplicate ids break silently:
+`findTrailById()` returns the first match, so the later hike becomes
+unreachable. Don't fold visits into one entry — each visit is its own journal
+entry.
 
 Because it's one template, `document.title` is set in JS. Link previews will
 show the generic title — a known, accepted tradeoff.
@@ -95,7 +102,7 @@ not random; do not make it random.
 
 Every `description` in `trees-data.js` is Ahmad’s own writing. **Never write or
 rewrite these for him** — at most paste in text he supplies, fixing only obvious
-typos. Same rule for trail `notes`.
+typos. Same rule for trail `notes` and photo captions.
 
 ### The Trail Journal is a journal, not a trail guide
 
@@ -131,6 +138,15 @@ Hike pages and project rows are deliberately flat.
   not just against the target.
 - `images/trees/_originals/` holds untouched pre-conversion copies. Gitignored;
   never commit it. It's the only source if images need re-converting.
+  `images/trails/_originals/<trail id>/` is the same thing for hike photos.
+- Hike photos from a phone: strip metadata (GPS) but keep the colour profile
+  (`exiftool -all= -tagsfromfile @ -icc_profile`), and rotate the pixels of any
+  photo with an EXIF rotate tag *before* stripping, or it ends up sideways.
+- On a hike page, every photo sits **below** the write-up: `previewImage`
+  first, then `additionalImages`, in a two-column grid (one column on
+  phones). There is no lead photo above the title.
+- Captions: `{ src, caption }` in `additionalImages`, or `previewCaption` for
+  the preview. The preview caption never shows on `trails.html`.
 
 ### Code style
 
@@ -163,13 +179,13 @@ care which it is — so there's no point "protecting" it by unlinking it either.
 Plain node, no dependencies, run from the repo root:
 
 ```
-node tests/check.js          # trail + project rows            15 assertions
+node tests/check.js          # trail + project rows            18 assertions
 node tests/tree-check.js     # rotation, determinism, DST      12
 node tests/render-check.js   # tree module rendering           19
-node tests/review-check.js   # hike page rendering             20
+node tests/review-check.js   # hike page rendering             27
 ```
 
-66 total. They run the real render code against a small DOM stub. **Run them
+76 total. They run the real render code against a small DOM stub. **Run them
 after any change to a data file or renderer** — they have caught the date
 off-by-one and several stale assumptions after schema changes.
 
@@ -192,9 +208,6 @@ old host.
 
 ## Known issues
 
-- **`images/trails/mount-leconte-via-alum-cave-trail/` is empty** — the Mount
-  LeConte entry points at `preview.jpg`, which doesn't exist yet, so that row
-  shows alt text on an empty background.
 - **Reading has no page yet.** Its home-page row renders as an inert `.row-soon`
   span rather than a link; swap it back to an anchor when the page exists.
 - **The Automated Network Compliance Manager repo is private.** The entry

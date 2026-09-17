@@ -47,7 +47,7 @@ const clone = () => JSON.parse(JSON.stringify(base));
 const ID = "mount-leconte-via-alum-cave-trail";
 const Q = "?id=" + ID;
 
-console.log("════ A — the real entry as it stands today (no mileage, no gallery) ════");
+console.log("════ A — the real entry as it stands today ════");
 const a = render(clone(), Q);
 console.log("document.title ->", a.title);
 console.log(a.html);
@@ -73,22 +73,46 @@ console.log("\n════ E — entry with no notes written yet ════")
 const e = clone(); delete e[0].notes;
 console.log(render(e, Q).html);
 
+console.log("\n════ F — no preview and no additionalImages ════");
+const f = clone(); delete f[0].previewImage; delete f[0].additionalImages;
+const fOut = render(f, Q).html;
+console.log(fOut);
+
+console.log("\n════ G — captioned preview + one captioned, one plain gallery photo ════");
+const g = clone();
+g[0].previewCaption = "Preview caption text.";
+g[0].additionalImages = [
+  { src: "images/trails/" + ID + "/01.jpg", caption: "Gallery caption text." },
+  "images/trails/" + ID + "/02.jpg"
+];
+const gOut = render(g, Q).html;
+console.log(gOut);
+
+const h = clone(); h[0].previewCaption = "   ";
+const hOut = render(h, Q).html;
+
 console.log("\n════ assertions ════");
 const fractional = clone(); fractional[0].distanceMiles = 11.8;
 const whole = clone(); whole[0].distanceMiles = 12.0;
 const eOut = render(e, Q).html;
+// Photos render below the write-up: preview first, then additionalImages.
+const realExtra = Array.isArray(base[0].additionalImages) ? base[0].additionalImages.length : 0;
+const photoCount = html => (html.match(/class="trail-photo"/g)||[]).length;
+const firstPhotoSrc = html => { const m = /class="trail-photo">\s*<img src="([^"]*)"/.exec(html); return m ? m[1] : ""; };
 const t = [
  ["A: renders the hike name", a.html.includes("Mount Leconte Via Alum Cave Trail")],
  ["A: date is May 14 2023, not May 13", a.html.includes("May 14, 2023")],
  ["A: sets document.title to the hike name", a.title === "Mount Leconte Via Alum Cave Trail — Ahmad Tobasei"],
- ["A: lead photo uses previewImage", a.html.includes("/preview.jpg")],
+ ["A: preview is the first photo", firstPhotoSrc(a.html) === base[0].previewImage],
+ ["A: photos come after the write-up", a.html.indexOf("trail-gallery") > a.html.lastIndexOf("trail-review__para")],
+ ["A: nothing renders above the title", a.html.indexOf("<img") > a.html.indexOf("trail-review__name")],
  ["A: gsmnp tag keeps its distinct class", a.html.includes('class="tag tag--gsmnp"')],
  ["A: no mileage -> no trailing separator", !a.html.includes("mi<") && (a.html.match(/trail-review__sep/g)||[]).length === 1],
- ["A: no additionalImages -> no gallery", !a.html.includes("trail-gallery")],
+ ["A: preview + every additionalImage render", photoCount(a.html) === 1 + realExtra],
  ["B: mileage renders inline", bOut.html.includes("12 mi")],
  ["B: two separators with three meta parts", (bOut.html.match(/trail-review__sep/g)||[]).length === 2],
  ["B: blank line split into 2 paragraphs", (bOut.html.match(/trail-review__para/g)||[]).length === 2],
- ["B: both gallery photos render", (bOut.html.match(/class="trail-photo"/g)||[]).length === 2],
+ ["B: preview + both gallery photos render", photoCount(bOut.html) === 3],
  ["B: only the {src,caption} one has a caption", (bOut.html.match(/trail-photo__caption/g)||[]).length === 1],
  ["B: caption text correct", bOut.html.includes("The clouds finally giving way.")],
  ["C: no id -> not found", render(clone(),"").html.includes("Trail not found")],
@@ -96,6 +120,11 @@ const t = [
  ["D: unknown id -> not found", render(clone(),"?id=nonsense").html.includes("Trail not found")],
  ["E: no notes -> still renders name + photo", eOut.includes("Mount Leconte") && eOut.includes("/preview.jpg")],
  ["E: no notes -> no empty paragraph", !eOut.includes("trail-review__para")],
+ ["G: preview caption renders", gOut.includes("Preview caption text.")],
+ ["G: preview caption sits before the next photo", gOut.indexOf("Preview caption text.") < gOut.indexOf("/01.jpg")],
+ ["G: one caption per captioned photo only", (gOut.match(/trail-photo__caption/g)||[]).length === 2],
+ ["H: blank previewCaption -> no caption", !hOut.includes("trail-photo__caption")],
+ ["F: no photos at all -> no gallery", !fOut.includes("trail-gallery") && !fOut.includes("<img")],
  ["12.0 formats as '12 mi' not '12.0 mi'", render(whole,Q).html.includes("12 mi") && !render(whole,Q).html.includes("12.0")],
  ["11.8 formats as '11.8 mi'", render(fractional,Q).html.includes("11.8 mi")],
 ];
