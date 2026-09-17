@@ -69,7 +69,7 @@ window.TRAILS_DATA = [
     previewImage: "images/trails/mount-leconte-via-alum-cave-trail/preview.jpg",
     // previewCaption: "",   — optional, a line under the preview photo
     reviewUrl: "trail-review.html?id=mount-leconte-via-alum-cave-trail",
-    // distanceMiles: 12,   — optional, uncomment if you want it shown
+     distanceMiles: 12,  // — optional, uncomment if you want it shown
     notes: "My very first time on Mount Leconte. I went alone on the last week of my freshman year of college as I'd felt a drive to for a while. I was nervous as I'd never done a hike this long or so strenuous before. It was about twelve miles and 3,000 feet of elevation gain total and I was totally exhausted but I'll never forget the feeling of sitting the cliff tops in the clouds. I waited and waited and waited and approximately two hours after I reached Leconte lodge the clouds finally gave way to a sea of rich emerald greens and blues. The Spruce-fir, the heath balds, the mosses, the hemlocks I felt like I'd never seen a place so beautiful in my life.",
     // To caption a photo, swap its path for { src: "…/01.jpg", caption: "…" }
     additionalImages: [
