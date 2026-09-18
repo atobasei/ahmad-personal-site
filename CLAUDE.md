@@ -35,20 +35,24 @@ index.html          home — bio, tree of the day, page links, socials, contact
 trails.html         Trail Journal index (one row per hike)
 trail-review.html   ONE template serving every hike, selected by ?id=<slug>
 projects.html       projects list
+resume.html         resume, rendered from data, with PDF download
 
 trees-data.js       52 tree species        -> window.TREES_DATA
 trails-data.js      hikes                  -> window.TRAILS_DATA
 projects-data.js    4 projects             -> window.PROJECTS_DATA
+resume-data.js      resume text            -> window.RESUME_DATA
 
 trees.js            picks + renders the day's tree
 trails.js           renders the hike rows
 trail-review.js     reads ?id= and renders one hike
 projects.js         renders the project rows
+resume.js           renders the resume sections
 script.js           home-page odds and ends (currently empty)
 style.css           one stylesheet, sectioned and numbered
 
 images/trees/<id>.jpg              one photo per species, flat
 images/trails/<trail-id>/          one folder per hike
+files/Ahmad_Tobasei_Resume.pdf     the PUBLIC, phone-free resume PDF
 tests/                             node test suite, no dependencies
 ```
 
@@ -161,6 +165,21 @@ Ahmad prefers explicit over clever:
 `projects.js` predate the preference and use template literals with an
 `escapeHtml` helper — fine as-is, but new code follows the newer style.
 
+### The resume: phone number never goes on the site
+
+`resume.html` renders `resume-data.js`; the Download/Open buttons serve
+`files/Ahmad_Tobasei_Resume.pdf`. That PDF is a copy of Ahmad’s real resume
+with the contact line rewritten **without his phone number** — the full version
+is for sending to employers directly. `tests/resume-check.js` fails if a phone
+number appears in any site file or inside the PDF.
+
+When the resume changes, update both: the text in `resume-data.js`, and a new
+PDF. For the PDF, redact the phone with a *true* redaction (PyMuPDF
+`add_redact_annot` + `apply_redactions`, which deletes the text rather than
+covering it), re-set the contact line, then run the test. No PDF tools are
+installed system-wide — `pip install --target <tmpdir> pymupdf` and use
+`PYTHONPATH`. Never commit the original PDF.
+
 ### The contact email is a plain `mailto:` link — deliberately
 
 It was briefly assembled in JS from `data-` attributes to keep the address out
@@ -183,9 +202,10 @@ node tests/check.js          # trail + project rows            18 assertions
 node tests/tree-check.js     # rotation, determinism, DST      12
 node tests/render-check.js   # tree module rendering           19
 node tests/review-check.js   # hike page rendering             28
+node tests/resume-check.js   # resume page + no phone leak     11
 ```
 
-77 total. They run the real render code against a small DOM stub. **Run them
+88 total. They run the real render code against a small DOM stub. **Run them
 after any change to a data file or renderer** — they have caught the date
 off-by-one and several stale assumptions after schema changes.
 

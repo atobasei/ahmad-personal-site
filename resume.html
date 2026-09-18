@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trail Journal — Ahmad Tobasei</title>
-  <meta name="description" content="Notes from hikes worth remembering — what the trail felt like, not what it measured.">
-  <link rel="canonical" href="https://atobasei.github.io/ahmad-personal-site/trails.html">
+  <title>Resume — Ahmad Tobasei</title>
+  <meta name="description" content="Ahmad Tobasei’s resume — computer science at the University of Tennessee, remote sensing research, and software projects. Downloadable as a PDF.">
+  <link rel="canonical" href="https://atobasei.github.io/ahmad-personal-site/resume.html">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
   <!-- Link preview. The site’s main entry point is a URL pasted into a job
@@ -14,9 +14,9 @@
        scrapers. Update the base url here if the site ever moves domain. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Ahmad Tobasei">
-  <meta property="og:title" content="Trail Journal — Ahmad Tobasei">
-  <meta property="og:description" content="Notes from hikes worth remembering — what the trail felt like, not what it measured.">
-  <meta property="og:url" content="https://atobasei.github.io/ahmad-personal-site/trails.html">
+  <meta property="og:title" content="Resume — Ahmad Tobasei">
+  <meta property="og:description" content="Ahmad Tobasei’s resume — computer science at the University of Tennessee, remote sensing research, and software projects. Downloadable as a PDF.">
+  <meta property="og:url" content="https://atobasei.github.io/ahmad-personal-site/resume.html">
   <meta property="og:image" content="https://atobasei.github.io/ahmad-personal-site/images/og-card.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <!-- body class drives the current-page marker in the shared nav -->
-<body class="page-trails">
+<body class="page-resume">
 
 <!-- Atmosphere: the site's ground texture. Present on every page. -->
 <div class="air" aria-hidden="true">
@@ -36,11 +36,11 @@
   <span class="band"></span>
 </div>
 
-<div class="page page--wide">
+<div class="page">
 
   <!-- ==========================================================================
        SHARED SITE HEADER — keep in sync across pages if edited.
-       This exact block also appears in index.html and projects.html. It never
+       This exact block also appears in index.html and trails.html. It never
        needs to differ between pages: the current page is marked by the <body>
        class (page-home / page-trails / page-projects /
        page-resume), not by editing here.
@@ -58,31 +58,34 @@
 
   <main>
 
-    <!-- ===== PAGE HEADING ===== -->
-    <div class="page-head">
-      <h1>Trail Journal</h1>
-      <!-- TODO: replace with a real intro if you want one -->
-      <p class="lede">My virtual trail journal; some notes and takeaways about my experiences on different hikes.</p>
+    <!-- ===== PAGE HEADING + PDF =====
+         The PDF is the phone-free copy — see the note in resume-data.js.
+         `download` only takes effect on the same origin; over file:// some
+         browsers open it instead, which is fine. -->
+    <div class="page-head resume-head">
+      <h1>Resume</h1>
+      <p class="resume-contact">Murfreesboro, TN · <a href="mailto:ahmadtobasei123@gmail.com">ahmadtobasei123@gmail.com</a></p>
+      <div class="resume-actions">
+        <a class="resume-button resume-button--primary" href="files/Ahmad_Tobasei_Resume.pdf" download="Ahmad_Tobasei_Resume.pdf">Download PDF</a>
+        <a class="resume-button" href="files/Ahmad_Tobasei_Resume.pdf" target="_blank" rel="noopener">Open PDF</a>
+      </div>
     </div>
 
     <!-- ==========================================================================
-         TRAIL LIST
-         Rendered by trails.js from the entries in trails-data.js — add new hikes
-         there, never here. The id must stay "trail-grid": trails.js looks it up
-         by that id (kept as-is so no existing script breaks, even though the
-         layout is now a single-column list of rows rather than a grid). Row
-         markup and class names come from trails.js too.
+         RESUME CONTENT
+         Rendered by resume.js from resume-data.js — edit the text there, never
+         here. The id must stay "resume": resume.js looks it up by that id.
          ========================================================================== -->
-    <div id="trail-grid" class="trail-list">
-      <!-- JS-rendered .trail-row elements go here -->
+    <div id="resume" class="resume">
+      <!-- JS-rendered .resume-section elements go here -->
     </div>
 
   </main>
 </div>
 
-<!-- Trail data — edit this file to add or remove hikes -->
-<script src="trails-data.js"></script>
-<!-- Renders the rows above from that data -->
-<script src="trails.js"></script>
+<!-- Resume text — edit this file when the resume changes (and the PDF) -->
+<script src="resume-data.js"></script>
+<!-- Renders the sections above from that data -->
+<script src="resume.js"></script>
 </body>
 </html>
