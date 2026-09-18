@@ -182,10 +182,10 @@ Plain node, no dependencies, run from the repo root:
 node tests/check.js          # trail + project rows            18 assertions
 node tests/tree-check.js     # rotation, determinism, DST      12
 node tests/render-check.js   # tree module rendering           19
-node tests/review-check.js   # hike page rendering             27
+node tests/review-check.js   # hike page rendering             28
 ```
 
-76 total. They run the real render code against a small DOM stub. **Run them
+77 total. They run the real render code against a small DOM stub. **Run them
 after any change to a data file or renderer** — they have caught the date
 off-by-one and several stale assumptions after schema changes.
 
@@ -208,8 +208,12 @@ old host.
 
 ## Known issues
 
-- **Reading has no page yet.** Its home-page row renders as an inert `.row-soon`
-  span rather than a link; swap it back to an anchor when the page exists.
+- **Reading has no page yet, and its home-page row is commented out** in
+  `index.html`. Bringing it back: uncomment it as a `.row-soon` span, then swap
+  that for an anchor once `reading.html` exists. `.row-soon` stays in
+  `style.css` either way — it's the pattern for any future "soon" row.
+- **The Substack social link is commented out** in `index.html`, below
+  Instagram. Uncomment it to restore.
 - **The Automated Network Compliance Manager repo is private.** The entry
   carries `private: true`, so `projects.js` renders that row unlinked with a
   "Private repository" note instead of sending visitors to a GitHub 404. Delete

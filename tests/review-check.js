@@ -107,7 +107,10 @@ const t = [
  ["A: photos come after the write-up", a.html.indexOf("trail-gallery") > a.html.lastIndexOf("trail-review__para")],
  ["A: nothing renders above the title", a.html.indexOf("<img") > a.html.indexOf("trail-review__name")],
  ["A: gsmnp tag keeps its distinct class", a.html.includes('class="tag tag--gsmnp"')],
- ["A: no mileage -> no trailing separator", !a.html.includes("mi<") && (a.html.match(/trail-review__sep/g)||[]).length === 1],
+ // Derived, not hardcoded: the meta line is location + date + (mileage, only
+ // when the entry has one), so the separator count follows from the data.
+ ["A: one separator per gap in the meta line", (a.html.match(/trail-review__sep/g)||[]).length === (typeof base[0].distanceMiles === "number" ? 2 : 1)],
+ ["A: mileage shows only when the entry has one", a.html.includes(" mi<") === (typeof base[0].distanceMiles === "number")],
  ["A: preview + every additionalImage render", photoCount(a.html) === 1 + realExtra],
  ["B: mileage renders inline", bOut.html.includes("12 mi")],
  ["B: two separators with three meta parts", (bOut.html.match(/trail-review__sep/g)||[]).length === 2],
