@@ -146,6 +146,8 @@ Hike pages and project rows are deliberately flat.
 - Hike photos from a phone: strip metadata (GPS) but keep the colour profile
   (`exiftool -all= -tagsfromfile @ -icc_profile`), and rotate the pixels of any
   photo with an EXIF rotate tag *before* stripping, or it ends up sideways.
+  Read the tag with `exiftool -Orientation -n` — `sips -g orientation` has
+  reported `<nil>` for a photo tagged 6 (rotate 90 CW).
 - On a hike page, every photo sits **below** the write-up: `previewImage`
   first, then `additionalImages`, in a two-column grid (one column on
   phones). There is no lead photo above the title.

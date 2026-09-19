@@ -40,6 +40,9 @@ Notes
 - Strip metadata before committing (`exiftool -all= -tagsfromfile @
   -icc_profile`), which keeps the colour profile. Phone photos can carry GPS.
   If a photo was stored sideways with a rotate tag, rotate the pixels first
-  (`sips -r 90`) or it will turn sideways once the tag is gone.
+  (`sips -r 90`) or it will turn sideways once the tag is gone. Check the tag
+  with `exiftool -Orientation -n` (6 = rotate 90 CW, 8 = 90 CCW). Do NOT trust
+  `sips -g orientation` — it reported <nil> for a photo tagged 6, and that
+  photo came out sideways.
 - Untouched phone originals go in `_originals/<id>/` here. That folder is
   gitignored — never commit it.
