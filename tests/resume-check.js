@@ -72,7 +72,7 @@ ok.push(["Experience renders every role",
 ok.push(["Projects render every project",
   data.projects.every(x => html.includes(x.name)) && html.includes(">Projects<")]);
 ok.push(["Skills render every label", data.skills.every(x => html.includes(">" + x.label + "<"))]);
-ok.push(["Coursework renders", html.includes(">Relevant Coursework<") && html.includes("Biologically Inspired Computation")]);
+ok.push(["Coursework renders", html.includes(">Relevant Coursework<") && html.includes(data.coursework)]);
 ok.push(["every bullet renders",
   data.experience.concat(data.projects).every(x => x.bullets.every(b => html.includes(b)))]);
 

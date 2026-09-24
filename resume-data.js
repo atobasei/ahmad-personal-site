@@ -32,7 +32,7 @@ window.RESUME_DATA = {
       school: "University of Tennessee",
       place: "Knoxville, TN",
       degree: "B.S. Computer Science; Minor in Machine Learning, GPA: 3.7",
-      date: "May 2026"
+      date: "Aug. 2022 – May 2026"
     }
   ],
 
@@ -43,30 +43,45 @@ window.RESUME_DATA = {
       place: "Knoxville, TN",
       dates: "Sep. 2024 – May 2026",
       bullets: [
-        "Used SLURM on the HiPerGator cluster to run Python pipelines that composited PlanetScope imagery into monthly mosaics, producing large datasets at 3 m resolution",
-        "Fixed repeated memory and storage quota failures by changing how jobs were partitioned and how intermediate files were cleaned up, letting the pipeline finish end to end",
-        "Applied Random Forest models for land cover classification using field survey data and used resampling methods to iteratively achieve more accurate models"
+        "Automated mosaicking and band harmonization pipelines in Python using SLURM managing 50–100+ GB datasets and chained job dependencies",
+        "Handled recurring out of memory and disk quota failures by repartitioning jobs and changing how intermediate files were cleaned up, allowing large file operations to complete end to end",
+        "Applied Random Forest models for land cover classification on field survey data, resampling iteratively to improve accuracy from 60.3% to 81.2%"
       ]
     },
     {
-      role: "Software Developer",
+      role: "Developer",
       org: "Hack4Impact",
       place: "Knoxville, TN",
       dates: "Sep. 2023 – May 2024",
       bullets: [
-        "Collaborated on a team to design and build an applicant tracking system for a nonprofit partner",
-        "Implemented frontend and backend features using JavaScript and HTML/CSS, and connected them to database logic"
+        "Built the dashboard list component for the organization’s applicant tracking system, working in scrum sprints on a 6 person team",
+        "Implemented frontend and backend features using JavaScript and HTML/CSS and integrated database functionality using MongoDB"
       ]
     }
   ],
 
   projects: [
     {
-      name: "Fraudulent Job Posting Detector",
+      name: "Fake Job Posting Predictor",
       stack: "Python, LLMs, RAG, Chrome Extension",
       bullets: [
-        "Created a Retrieval Augmented Generation (RAG) pipeline to classify job postings as real or fraudulent and explain each result",
-        "Integrated the system into a Chrome extension allowing for in browser use and explanations"
+        "Created a Retrieval Augmented Generation (RAG) system to classify online job postings as real or fraudulent and provide explanations for each result.",
+        "Integrated this system into a Chrome extension allowing for in browser use"
+      ]
+    },
+    {
+      name: "Unix Shell Implementation",
+      stack: "C, Linux",
+      bullets: [
+        "Created a shell based on Bash supporting Unix command parsing, multiprocessing, I/O redirection, and signal handling"
+      ]
+    },
+    {
+      name: "Skincare Recommender",
+      stack: "Python, React, Node.js, Firebase",
+      bullets: [
+        "Developed a skincare recommendation platform scoring products on user preferences such as skin type, concerns, and price filters",
+        "Implemented a Python based selection algorithm connected to a React frontend and Node.js backend, with Firebase handling authentication and storage"
       ]
     },
     {
@@ -74,33 +89,17 @@ window.RESUME_DATA = {
       stack: "Python, JSON, Networking",
       bullets: [
         "Built a system to retrieve and compare network device configurations against baseline compliance policies",
-        "Detected configuration errors and generated remediation actions to enforce policy compliance",
-        "Designed parsing and validation logic to support multiple device types and rule sets"
-      ]
-    },
-    {
-      name: "Skincare Recommendation Platform",
-      stack: "Python, React, Node.js, Firebase",
-      bullets: [
-        "Developed a skincare recommendation platform based on user preferences such as skin type, concerns, and price",
-        "Implemented a Python based selection algorithm connected to a React frontend and Node.js backend"
-      ]
-    },
-    {
-      name: "Unix Shell Implementation",
-      stack: "C, Linux",
-      bullets: [
-        "Implemented a basic Bash like shell supporting Unix command parsing, multiprocessing, I/O redirection, and signal handling"
+        "Detected configuration errors, generated remediation actions, and designed parsing logic and rule sets"
       ]
     }
   ],
 
   skills: [
-    { label: "Languages", items: "C, C++, Python, Java, JavaScript, TypeScript" },
+    { label: "Languages", items: "Python, C, C++, Java, JavaScript, TypeScript, SQL" },
     { label: "Frameworks", items: "React, Node.js, Flask" },
-    { label: "Developer Tools", items: "Git, GitHub, Docker, Linux, SLURM, QGIS" },
+    { label: "Developer Tools", items: "Git, GitHub, Docker, Linux, SLURM, MongoDB, QGIS" },
     { label: "Libraries", items: "scikit-learn, NumPy, pandas, geopandas" }
   ],
 
-  coursework: "Data Structures and Algorithms, Systems Programming, Software Engineering, Machine Learning, Deep Learning, Large Language Models, Cybersecurity, Biologically Inspired Computation"
+  coursework: "Data Structures and Algorithms, Systems Programming, Software Engineering, Machine Learning, Deep Learning, Advanced LLMs, Cybersecurity"
 };
